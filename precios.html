@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -82,14 +83,16 @@
   .reveal.in{ opacity:1; transform:translateY(0); }
 
   /* SERVICIOS INDIVIDUALES */
-  .svc-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:20px; align-items:start; }
+  .svc-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:20px; align-items:stretch; }
   .svc-card{
     background: var(--surface); border:2px solid var(--line); border-radius: var(--radius);
     padding:26px 22px; cursor:pointer; text-align:left;
     transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .3s, opacity .3s;
     transform-origin: top center;
     position:relative;
+    display:flex; flex-direction:column; height:100%;
   }
+
   .svc-card:hover{ border-color: rgba(139,92,246,0.4); transform: translateY(-4px); }
   .svc-card.active{
     transform: scale(1.3) translateY(-4px);
@@ -110,8 +113,10 @@
   }
   .svc-icon svg{ width:22px; height:22px; }
   .svc-card h3{ font-size:16.5px; font-weight:600; margin-bottom:8px; }
-  .svc-card p{ font-size:13.5px; color: var(--ink-soft); line-height:1.55; margin-bottom:14px; }
-  .svc-price-tag{ font-family:'IBM Plex Mono'; font-size:12px; color: var(--blue); font-weight:600; }
+  .svc-card p{ font-size:13.5px; color: var(--ink-soft); line-height:1.55; margin-bottom:14px; flex:1; }
+  .svc-price-tag{ margin-top:auto; }
+  .svc-price-tag .price-label{ font-family:'IBM Plex Mono'; font-size:11px; color: var(--ink-faint); text-transform:uppercase; letter-spacing:.04em; display:block; margin-bottom:2px; }
+  .svc-price-tag .price-value{ font-family:'Space Grotesk'; font-weight:700; font-size:22px; color: var(--ink); }
   .svc-hint{ font-family:'IBM Plex Mono'; font-size:10.5px; color: var(--ink-faint); text-transform:uppercase; letter-spacing:.06em; margin-top:12px; }
 
   /* PANEL DE EJEMPLO */
@@ -199,8 +204,9 @@
     text-transform:uppercase; padding:5px 12px; border-radius:20px; white-space:nowrap;
   }
   .pkg-name{ font-family:'Space Grotesk'; font-weight:700; font-size:19px; margin-bottom:6px; }
-  .pkg-price{ font-family:'Space Grotesk'; font-weight:700; font-size:26px; margin-bottom:4px; }
-  .pkg-price span{ font-family:'IBM Plex Mono'; font-size:11px; color: var(--ink-faint); font-weight:400; }
+  .pkg-price{ font-family:'Space Grotesk'; font-weight:700; font-size:22px; margin-bottom:4px; }
+  .pkg-price .price-currency{ font-family:'IBM Plex Mono'; font-size:11px; color: var(--ink-faint); font-weight:400; }
+  .pkg-price .price-value{ font-family:'Space Grotesk'; font-weight:700; font-size:22px; color: var(--ink); }
   .pkg-list{ list-style:none; margin:18px 0 22px; flex:1; }
   .pkg-list li{
     font-size:13px; color: var(--ink-soft); padding-left:22px; position:relative; margin-bottom:10px; line-height:1.4;
@@ -339,7 +345,7 @@
         </div>
         <h3>Análisis de datos</h3>
         <p>Convertimos tus datos dispersos en tableros claros y accionables, con la estructura correcta detrás para que la información sea confiable.</p>
-        <div class="svc-price-tag">Desde $249.900</div>
+        <div class="svc-price-tag" data-service-name="Análisis de datos"><span class="price-label">Desde</span><span class="price-value">$249.900</span></div>
         <div class="svc-hint">Ver ejemplo ↓</div>
       </button>
 
@@ -349,7 +355,7 @@
         </div>
         <h3>Creación de páginas web</h3>
         <p>Diseñamos y construimos sitios rápidos, responsivos y con identidad propia, listos para convertir visitas en clientes.</p>
-        <div class="svc-price-tag">Desde $429.900</div>
+        <div class="svc-price-tag" data-service-name="Creación de páginas web"><span class="price-label">Desde</span><span class="price-value">$429.900</span></div>
         <div class="svc-hint">Ver ejemplo ↓</div>
       </button>
 
@@ -359,7 +365,7 @@
         </div>
         <h3>Automatización</h3>
         <p>Conectamos tus herramientas para eliminar tareas repetitivas: cotizaciones, reportes, seguimientos y más, sin intervención manual.</p>
-        <div class="svc-price-tag">Desde $449.900</div>
+        <div class="svc-price-tag" data-service-name="Automatización"><span class="price-label">Desde</span><span class="price-value">$449.900</span></div>
         <div class="svc-hint">Ver ejemplo ↓</div>
       </button>
 
@@ -369,7 +375,7 @@
         </div>
         <h3>Agente personal o empresarial</h3>
         <p>Un agente de IA propio, entrenado con la información de tu negocio, disponible 24/7 en WhatsApp o Telegram.</p>
-        <div class="svc-price-tag">Desde $549.000</div>
+        <div class="svc-price-tag" data-service-name="Agente personal o empresarial"><span class="price-label">Desde</span><span class="price-value">$549.000</span></div>
         <div class="svc-hint">Ver ejemplo ↓</div>
       </button>
     </div>
@@ -403,7 +409,7 @@
         </div>
         <div class="example-price">
           <div class="lbl">Valor del servicio — Análisis de datos</div>
-          <div class="val grad-text">$249.900</div>
+          <div class="val grad-text" data-service-name="Análisis de datos"><span class="price-value">$249.900</span></div>
         </div>
       </div>
     </div>
@@ -421,7 +427,7 @@
         </div>
         <div class="example-price">
           <div class="lbl">Valor del servicio — Creación de páginas web</div>
-          <div class="val grad-text">$429.900</div>
+          <div class="val grad-text" data-service-name="Creación de páginas web"><span class="price-value">$429.900</span></div>
         </div>
       </div>
     </div>
@@ -441,7 +447,7 @@
         </div>
         <div class="example-price">
           <div class="lbl">Valor del servicio — Automatización</div>
-          <div class="val grad-text">$449.900</div>
+          <div class="val grad-text" data-service-name="Automatización"><span class="price-value">$449.900</span></div>
         </div>
       </div>
     </div>
@@ -458,7 +464,7 @@
         </div>
         <div class="example-price">
           <div class="lbl">Valor del servicio — Agente personal o empresarial</div>
-          <div class="val grad-text">$549.000</div>
+          <div class="val grad-text" data-service-name="Agente personal o empresarial"><span class="price-value">$549.000</span></div>
         </div>
       </div>
     </div>
@@ -477,7 +483,7 @@
     <div class="pkg-grid">
       <div class="pkg-card reveal">
         <div class="pkg-name">Vixtory Starter</div>
-        <div class="pkg-price">$389.900 <span>COP</span></div>
+        <div class="pkg-price" data-service-name="Vixtory Starter"><span class="price-value">$389.900</span> <span class="price-currency">COP</span></div>
         <ul class="pkg-list">
           <li>Consultoría inicial</li>
           <li>Análisis de datos</li>
@@ -487,7 +493,7 @@
 
       <div class="pkg-card reveal">
         <div class="pkg-name">Vixtory Tech</div>
-        <div class="pkg-price">$759.900 <span>COP</span></div>
+        <div class="pkg-price" data-service-name="Vixtory Tech"><span class="price-value">$759.900</span> <span class="price-currency">COP</span></div>
         <ul class="pkg-list">
           <li>Consultoría</li>
           <li>Creación de página web</li>
@@ -500,7 +506,7 @@
       <div class="pkg-card featured reveal">
         <div class="pkg-badge">Más elegido</div>
         <div class="pkg-name">Vixtory Pro</div>
-        <div class="pkg-price">$999.900 <span>COP</span></div>
+        <div class="pkg-price" data-service-name="Vixtory Pro"><span class="price-value">$999.900</span> <span class="price-currency">COP</span></div>
         <ul class="pkg-list">
           <li>Consultoría</li>
           <li>Creación de página web</li>
@@ -513,7 +519,7 @@
 
       <div class="pkg-card reveal">
         <div class="pkg-name">Vixtory Ultimate</div>
-        <div class="pkg-price">$1.499.900 <span>COP</span></div>
+        <div class="pkg-price" data-service-name="Vixtory Ultimate"><span class="price-value">$1.499.900</span> <span class="price-currency">COP</span></div>
         <ul class="pkg-list">
           <li>Consultoría</li>
           <li>Creación de página web</li>
@@ -676,6 +682,63 @@
   }
   document.getElementById('emailModal').addEventListener('click', (e) => { if(e.target.id === 'emailModal') closeEmailModal(); });
   document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeEmailModal(); });
+</script>
+
+<!-- ============ PRECIOS EN VIVO (consulta al backend de Vixtory) ============ -->
+<script>
+  // Trae los precios actuales desde la base de datos del agente.
+  // Si algo falla (endpoint caído, sin red, nombre no encontrado), la página
+  // se queda tranquilamente con los precios ya escritos en el HTML — nunca rompe nada.
+  const PRICING_ENDPOINT = 'https://api.vixtory.tech/public/servicios';
+
+  function formatCOP(value) {
+    const n = Number(value);
+    if (Number.isNaN(n)) return null;
+    return '$' + Math.round(n).toLocaleString('es-CO').replace(/,/g, '.');
+  }
+
+  async function updateLivePricing() {
+    let data;
+    try {
+      const res = await fetch(PRICING_ENDPOINT, { cache: 'no-store' });
+      if (!res.ok) return;
+      data = await res.json();
+    } catch (err) {
+      return; // sin conexión al backend: se queda con los precios estáticos
+    }
+
+    // Acepta tanto un array plano como { servicios: [...] }
+    const items = Array.isArray(data) ? data : (data.servicios || data.services || []);
+    if (!Array.isArray(items) || items.length === 0) return;
+
+    // Mapa nombre -> precio, tolerante a mayúsculas/espacios extra
+    const priceByName = {};
+    items.forEach(item => {
+      const name = (item.name || item.nombre || '').trim();
+      const price = item.price ?? item.precio;
+      if (name && price !== undefined && price !== null) {
+        priceByName[name.toLowerCase()] = price;
+      }
+    });
+
+    document.querySelectorAll('[data-service-name]').forEach(el => {
+      const key = el.getAttribute('data-service-name').trim().toLowerCase();
+      const price = priceByName[key];
+      if (price === undefined) return; // no vino del backend: se deja el valor estático
+
+      const formatted = formatCOP(price);
+      if (!formatted) return;
+
+      const valueEl = el.querySelector('.price-value');
+      if (valueEl) {
+        valueEl.textContent = formatted;
+      } else {
+        el.textContent = formatted;
+      }
+    });
+  }
+
+  updateLivePricing();
 </script>
 
 </body>
