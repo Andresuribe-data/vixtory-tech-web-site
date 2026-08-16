@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -224,6 +223,7 @@
   .btn-secondary{ background: var(--bg-alt); color: var(--ink); border:1px solid var(--line); }
   .btn-secondary:hover{ border-color: var(--ink); }
   .btn-block{ width:100%; }
+  .btn-sm{ padding:9px 16px; font-size:12.5px; border-radius:10px; }
 
   .footnotes{ max-width:720px; margin: 46px auto 0; }
   .footnotes p{ font-size:11.5px; color: var(--ink-faint); line-height:1.7; }
@@ -339,45 +339,49 @@
     </div>
 
     <div class="svc-grid" id="svcGrid">
-      <button type="button" class="svc-card reveal" data-svc="datos">
+      <div class="svc-card reveal" data-svc="datos" role="button" tabindex="0">
         <div class="svc-icon">
           <svg viewBox="0 0 24 24"><defs><linearGradient id="pg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4F6FEF"/><stop offset="100%" stop-color="#8B5CF6"/></linearGradient></defs><rect x="3.5" y="12" width="4" height="9" rx="1" fill="url(#pg1)"/><rect x="10" y="7" width="4" height="14" rx="1" fill="url(#pg1)"/><rect x="16.5" y="3" width="4" height="18" rx="1" fill="url(#pg1)"/></svg>
         </div>
         <h3>Análisis de datos</h3>
         <p>Convertimos tus datos dispersos en tableros claros y accionables, con la estructura correcta detrás para que la información sea confiable.</p>
         <div class="svc-price-tag" data-service-name="Análisis de datos"><span class="price-label">Desde</span><span class="price-value">$249.900</span></div>
+        <button type="button" class="btn btn-primary btn-sm btn-block" onclick="event.stopPropagation(); openEmailModal();">Elegir plan</button>
         <div class="svc-hint">Ver ejemplo ↓</div>
-      </button>
+      </div>
 
-      <button type="button" class="svc-card reveal" data-svc="web">
+      <div class="svc-card reveal" data-svc="web" role="button" tabindex="0">
         <div class="svc-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="url(#pg2)" stroke-width="1.6"><defs><linearGradient id="pg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4F6FEF"/><stop offset="100%" stop-color="#8B5CF6"/></linearGradient></defs><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 4 5.7 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.7-4-9s1.5-6.5 4-9Z"/></svg>
         </div>
         <h3>Creación de páginas web</h3>
         <p>Diseñamos y construimos sitios rápidos, responsivos y con identidad propia, listos para convertir visitas en clientes.</p>
         <div class="svc-price-tag" data-service-name="Creación de páginas web"><span class="price-label">Desde</span><span class="price-value">$429.900</span></div>
+        <button type="button" class="btn btn-primary btn-sm btn-block" onclick="event.stopPropagation(); openEmailModal();">Elegir plan</button>
         <div class="svc-hint">Ver ejemplo ↓</div>
-      </button>
+      </div>
 
-      <button type="button" class="svc-card reveal" data-svc="auto">
+      <div class="svc-card reveal" data-svc="auto" role="button" tabindex="0">
         <div class="svc-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="url(#pg3)" stroke-width="1.6"><defs><linearGradient id="pg3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4F6FEF"/><stop offset="100%" stop-color="#8B5CF6"/></linearGradient></defs><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.04 1.56V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 9 19.35a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.65 15a1.7 1.7 0 0 0-1.56-1.04H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.65 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.65a1.7 1.7 0 0 0 1.04-1.56V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1.04 1.56 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.35 9c.14.6.55 1.1 1.56 1.04H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1Z"/></svg>
         </div>
         <h3>Automatización</h3>
         <p>Conectamos tus herramientas para eliminar tareas repetitivas: cotizaciones, reportes, seguimientos y más, sin intervención manual.</p>
         <div class="svc-price-tag" data-service-name="Automatización"><span class="price-label">Desde</span><span class="price-value">$449.900</span></div>
+        <button type="button" class="btn btn-primary btn-sm btn-block" onclick="event.stopPropagation(); openEmailModal();">Elegir plan</button>
         <div class="svc-hint">Ver ejemplo ↓</div>
-      </button>
+      </div>
 
-      <button type="button" class="svc-card reveal" data-svc="agente">
+      <div class="svc-card reveal" data-svc="agente" role="button" tabindex="0">
         <div class="svc-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="url(#pg4)" stroke-width="1.6"><defs><linearGradient id="pg4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4F6FEF"/><stop offset="100%" stop-color="#8B5CF6"/></linearGradient></defs><path d="M9.5 2a3.5 3.5 0 0 0-3.5 3.5V6a3 3 0 0 0-1.5 5.6A3 3 0 0 0 6 17a3.5 3.5 0 0 0 3.5 3.5v-15Z"/><path d="M14.5 2A3.5 3.5 0 0 1 18 5.5V6a3 3 0 0 1 1.5 5.6A3 3 0 0 1 18 17a3.5 3.5 0 0 1-3.5 3.5v-15Z"/></svg>
         </div>
         <h3>Agente personal o empresarial</h3>
         <p>Un agente de IA propio, entrenado con la información de tu negocio, disponible 24/7 en WhatsApp o Telegram.</p>
         <div class="svc-price-tag" data-service-name="Agente personal o empresarial"><span class="price-label">Desde</span><span class="price-value">$549.000</span></div>
+        <button type="button" class="btn btn-primary btn-sm btn-block" onclick="event.stopPropagation(); openEmailModal();">Elegir plan</button>
         <div class="svc-hint">Ver ejemplo ↓</div>
-      </button>
+      </div>
     </div>
 
     <!-- EJEMPLO: DATOS -->
@@ -616,6 +620,10 @@
   let activeSvc = null;
 
   svcCards.forEach(card => {
+    card.addEventListener('keydown', (e) => {
+      if (e.target !== card) return; // no interferir con el botón "Elegir plan" ni otros hijos
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+    });
     card.addEventListener('click', () => {
       const key = card.dataset.svc;
       const exampleEl = document.getElementById(exampleIds[key]);
