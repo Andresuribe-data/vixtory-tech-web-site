@@ -5,4 +5,7 @@
 User-agent: *
 Allow: /
 
+# Content Signals — preferencias de uso de contenido por sistemas de IA
+Content-Signal: ai-train=no, search=yes, ai-input=no
+
 Sitemap: https://vixtory.tech/sitemap.xml
