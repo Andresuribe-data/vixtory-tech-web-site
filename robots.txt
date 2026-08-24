@@ -8,4 +8,34 @@ Allow: /
 # Content Signals — preferencias de uso de contenido por sistemas de IA
 Content-Signal: ai-train=no, search=yes, ai-input=no
 
+# Reglas explícitas para bots de IA (refuerzan Content-Signal)
+# Bots de búsqueda y agentes: permitidos (search=yes)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Bots de entrenamiento: bloqueados (ai-train=no)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
 Sitemap: https://vixtory.tech/sitemap.xml
