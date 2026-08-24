@@ -1,0 +1,15 @@
+{
+  "id": "vixtory-assistant",
+  "name": "Asistente Vixtory",
+  "description": "Agente de atención al cliente y consultoría de Vixtory Tech, disponible por WhatsApp.",
+  "type": "assistant",
+  "status": "available",
+  "contact": {
+    "type": "whatsapp",
+    "url": "https://wa.me/573000000000"
+  },
+  "a2a": {
+    "status": "planned",
+    "endpoint": null
+  }
+}

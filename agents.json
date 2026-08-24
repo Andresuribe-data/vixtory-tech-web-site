@@ -1,0 +1,20 @@
+{
+  "domain": "vixtory.tech",
+  "discovery": "DNS-AID",
+  "updated": "2026-08-23",
+  "agents": [
+    {
+      "id": "vixtory-assistant",
+      "name": "Asistente Vixtory",
+      "description": "Agente de atención al cliente y consultoría de Vixtory Tech, disponible por WhatsApp.",
+      "type": "assistant",
+      "status": "available",
+      "contact": {
+        "type": "whatsapp",
+        "url": "https://wa.me/573000000000"
+      },
+      "a2a_endpoint": null,
+      "a2a_status": "planned"
+    }
+  ]
+}
