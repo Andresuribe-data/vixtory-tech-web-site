@@ -1,0 +1,8 @@
+# robots.txt — Vixtory Tech
+# https://vixtory.tech
+# Permite el rastreo de todo el sitio a todos los buscadores.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://vixtory.tech/sitemap.xml
