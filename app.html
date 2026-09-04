@@ -11,30 +11,30 @@
 <meta name="description" content="Vixtory Maps: crea, mueve y conecta nodos libremente. Tipos de nodos, prioridades, etiquetas, descripciones, varios mapas y modo oscuro. Por Vixtory Tech.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600&family=Outfit:wght@400;500;600;700&family=Azeret+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  /* ============ Tokens Vixtory Tech ============ */
+  /* ============ Tokens Vixtory Tech (v3) ============ */
   :root{
-    --bg:#F7F8FC; --bg-alt:#EEF0FA; --surface:#FFFFFF;
-    --ink:#0E1830; --ink-soft:#4B5573; --ink-faint:#8890AA; --line:#E1E4F0;
+    --bg:#F2F0E6; --bg-alt:#EAE7DB; --surface:#FFFFFF;
+    --ink:#161F38; --ink-soft:#565F7D; --ink-faint:#8890A8; --line:rgba(22,31,56,.12);
     --blue:#4F6FEF; --violet:#8B5CF6; --cyan:#00E5FF; --green:#3ECF8E; --red:#EF4444; --amber:#F59E0B;
     --grad:linear-gradient(135deg,#4F6FEF 0%,#8B5CF6 100%);
-    --shadow:0 1px 2px rgba(14,24,48,.05),0 10px 28px -14px rgba(14,24,48,.18);
+    --shadow:0 1px 2px rgba(22,31,56,.06),0 10px 28px -14px rgba(22,31,56,.2);
     --ease:cubic-bezier(.16,.84,.44,1);
-    --canvas-bg:#FBFBFE; --grid-line:rgba(14,24,48,.06); --grid-major:rgba(14,24,48,.11);
+    --canvas-bg:#F8F6EE; --grid-line:rgba(22,31,56,.06); --grid-major:rgba(22,31,56,.11);
   }
   html[data-theme="dark"]{
-    --bg:#05070D; --bg-alt:#080C16; --surface:#0D1220;
-    --ink:#F4F6FC; --ink-soft:#8E99B2; --ink-faint:#56617A; --line:rgba(255,255,255,.10);
+    --bg:#000000; --bg-alt:#0A0A0A; --surface:#121212;
+    --ink:#F5F3EC; --ink-soft:#B4B7C4; --ink-faint:#83879A; --line:rgba(255,255,255,.12);
     --blue:#5B7CFF; --violet:#9A6CFF; --cyan:#00E5FF; --green:#58F0BA; --red:#F87171; --amber:#FBBF24;
-    --shadow:0 1px 2px rgba(0,0,0,.5),0 12px 30px -14px rgba(0,0,0,.7);
-    --canvas-bg:#060910; --grid-line:rgba(255,255,255,.05); --grid-major:rgba(255,255,255,.10);
+    --shadow:0 1px 2px rgba(0,0,0,.6),0 12px 30px -14px rgba(0,0,0,.8);
+    --canvas-bg:#060606; --grid-line:rgba(255,255,255,.05); --grid-major:rgba(255,255,255,.10);
   }
   *{ box-sizing:border-box; margin:0; padding:0; }
   html,body{ height:100%; overflow:hidden; }
   body{
     background:var(--bg); color:var(--ink);
-    font-family:'Inter', system-ui, sans-serif; font-size:14px;
+    font-family:'Outfit', system-ui, sans-serif; font-size:14px;
     -webkit-font-smoothing:antialiased;
     transition: background .3s var(--ease), color .3s var(--ease);
   }
@@ -65,14 +65,14 @@
   .brand-mark svg{ width:17px; height:17px; }
   .brand-logo{ height:32px; width:auto; }
   html[data-theme='dark'] .brand-logo{ filter: brightness(0) invert(1); }
-  .brand-name{ font-family:'Space Grotesk'; font-weight:600; font-size:14.5px; }
+  .brand-name{ font-family:'Outfit',sans-serif; font-weight:700; font-size:14.5px; letter-spacing:.03em; }
   .brand-name span{ color:var(--ink-faint); font-weight:500; }
   .v-div{ width:1px; height:26px; background:var(--line); flex-shrink:0; }
 
   .map-name-wrap{ display:flex; align-items:center; gap:8px; min-width:0; }
-  .map-name-label{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-faint); }
+  .map-name-label{ font-family:'Azeret Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-faint); }
   #mapName{
-    font-family:'Space Grotesk'; font-weight:600; font-size:15px;
+    font-family:'Spectral',serif; font-weight:600; font-size:15px;
     border:none; background:transparent; padding:6px 8px; border-radius:8px; cursor:text;
     min-width:120px; max-width:280px; border:1px solid transparent;
   }
@@ -105,7 +105,7 @@
   }
   @keyframes popIn{ from{ opacity:0; transform:translateY(-6px) scale(.98);} to{ opacity:1; transform:none;} }
   .pop.open{ display:block; }
-  .pop h5{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-faint); margin:4px 0 8px; }
+  .pop h5{ font-family:'Azeret Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-faint); margin:4px 0 8px; }
   .type-grid{ display:grid; grid-template-columns:1fr 1fr; gap:6px; }
   .type-opt{
     display:flex; align-items:center; gap:8px; padding:7px 9px; border-radius:9px;
@@ -127,7 +127,7 @@
   .pri-row{ display:flex; gap:6px; }
   .pri-opt{
     width:38px; height:30px; border-radius:8px; border:1px solid var(--line);
-    display:grid; place-items:center; font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:700;
+    display:grid; place-items:center; font-family:'Azeret Mono',monospace; font-size:11px; font-weight:700;
     cursor:pointer; color:var(--ink-soft); transition:all .15s;
   }
   .pri-opt.sel{ color:#fff; transform:translateY(-1px); box-shadow:0 4px 10px -4px rgba(0,0,0,.35); }
@@ -147,7 +147,7 @@
   .color-swatch.reset::after{ content:'✕'; position:absolute; inset:0; display:grid; place-items:center; font-size:11px; color:#fff; font-weight:700; }
   .color-custom{ width:100%; margin-top:9px; display:flex; gap:8px; align-items:center; }
   .color-custom input[type=color]{ width:34px; height:30px; padding:2px; border-radius:8px; border:1px solid var(--line); background:var(--surface); cursor:pointer; }
-  .color-custom input[type=text]{ flex:1; font-family:'IBM Plex Mono',monospace; font-size:11px; }
+  .color-custom input[type=text]{ flex:1; font-family:'Azeret Mono',monospace; font-size:11px; }
 
   /* ============ LAYOUT ============ */
   .main{ display:flex; flex:1; min-height:0; position:relative; }
@@ -164,8 +164,8 @@
 
   /* ============ SIDEBAR ============ */
   .side-head{ padding:14px 16px 10px; display:flex; align-items:center; justify-content:space-between; }
-  .side-head h4{ font-family:'Space Grotesk'; font-size:13px; font-weight:600; letter-spacing:.01em; }
-  .side-count{ font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--ink-faint); }
+  .side-head h4{ font-family:'Spectral',serif; font-size:13px; font-weight:600; letter-spacing:.01em; }
+  .side-count{ font-family:'Azeret Mono',monospace; font-size:10px; color:var(--ink-faint); }
   .side-actions{ display:flex; gap:6px; padding:0 16px 12px; }
   .mini-btn{
     flex:1; display:inline-flex; align-items:center; justify-content:center; gap:6px;
@@ -188,7 +188,7 @@
   .map-card.active{ border-color:var(--blue); background:color-mix(in srgb,var(--blue) 6%,var(--surface)); }
   .map-card .m-name{ font-weight:600; font-size:13px; display:flex; align-items:center; gap:8px; }
   .map-card .m-name input{ font-size:12px; padding:4px 6px; flex:1; min-width:0; }
-  .map-card .m-meta{ font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--ink-faint); margin-top:5px; display:flex; gap:10px; align-items:center; }
+  .map-card .m-meta{ font-family:'Azeret Mono',monospace; font-size:10px; color:var(--ink-faint); margin-top:5px; display:flex; gap:10px; align-items:center; }
   .map-card .m-actions{ position:absolute; top:8px; right:8px; display:none; gap:3px; }
   .map-card:hover .m-actions{ display:flex; }
   .m-act{
@@ -211,7 +211,7 @@
   .statusbar{
     display:flex; align-items:center; gap:18px; padding:5px 16px;
     background:var(--surface); border-top:1px solid var(--line);
-    font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--ink-faint); flex-shrink:0;
+    font-family:'Azeret Mono',monospace; font-size:10.5px; color:var(--ink-faint); flex-shrink:0;
   }
   .statusbar .sb-right{ margin-left:auto; display:flex; align-items:center; gap:14px; }
   .statusbar .save-state{ display:inline-flex; align-items:center; gap:6px; }
@@ -230,11 +230,11 @@
     padding:14px 16px; border-bottom:1px solid var(--line);
     display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; background:var(--surface); z-index:2;
   }
-  .insp-head h4{ font-family:'Space Grotesk'; font-size:13px; font-weight:600; }
+  .insp-head h4{ font-family:'Spectral',serif; font-size:13px; font-weight:600; }
   .insp-close{ border:none; background:none; color:var(--ink-faint); cursor:pointer; font-size:16px; padding:4px; border-radius:6px; }
   .insp-close:hover{ color:var(--ink); background:var(--bg-alt); }
   .insp-body{ padding:16px; display:flex; flex-direction:column; gap:16px; }
-  .fld label{ display:block; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:6px; }
+  .fld label{ display:block; font-family:'Azeret Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:6px; }
   .fld input[type=text], .fld textarea, .fld select{ width:100%; }
   .fld textarea{ resize:vertical; min-height:64px; line-height:1.5; }
   .fld .hint{ font-size:11px; color:var(--ink-faint); margin-top:5px; line-height:1.5; }
@@ -273,8 +273,8 @@
   .stat{
     background:var(--bg-alt); border:1px solid var(--line); border-radius:10px; padding:10px 12px;
   }
-  .stat b{ display:block; font-family:'Space Grotesk'; font-size:17px; }
-  .stat span{ font-size:10.5px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em; font-family:'IBM Plex Mono',monospace; }
+  .stat b{ display:block; font-family:'Spectral',serif; font-size:17px; }
+  .stat span{ font-size:10.5px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em; font-family:'Azeret Mono',monospace; }
   .empty-insp{ padding:26px 20px; text-align:center; color:var(--ink-faint); font-size:13px; line-height:1.7; }
 
   /* ============ OVERLAYS ============ */
@@ -282,7 +282,7 @@
     position:absolute; z-index:30; display:none;
     background:var(--surface); color:var(--ink);
     border:2px solid var(--blue); border-radius:8px;
-    padding:6px 8px; font-family:'Inter',sans-serif; font-weight:600; font-size:14px;
+    padding:6px 8px; font-family:'Outfit',sans-serif; font-weight:600; font-size:14px;
     outline:none; resize:none; box-shadow:0 8px 30px -8px rgba(79,111,239,.5); line-height:1.35;
   }
   #tooltip{
@@ -296,7 +296,7 @@
   #tooltip .tt-tags{ display:flex; flex-wrap:wrap; gap:4px; margin-top:7px; }
   #tooltip .tt-tag{ font-size:10px; font-weight:600; background:var(--bg-alt); border:1px solid var(--line); border-radius:10px; padding:2px 7px; color:var(--ink-soft); }
   #tooltip .tt-meta{ display:flex; gap:6px; margin-top:7px; flex-wrap:wrap; }
-  #tooltip .tt-pill{ font-size:9.5px; font-weight:700; border-radius:8px; padding:2px 7px; color:#fff; font-family:'IBM Plex Mono',monospace; }
+  #tooltip .tt-pill{ font-size:9.5px; font-weight:700; border-radius:8px; padding:2px 7px; color:#fff; font-family:'Azeret Mono',monospace; }
   .empty-state{
     position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
     pointer-events:none; color:var(--ink-faint); text-align:center; z-index:5;
@@ -304,7 +304,7 @@
   .empty-state .big{ font-size:40px; }
   .empty-state p{ font-size:14px; max-width:340px; line-height:1.6; }
   .empty-state kbd{
-    font-family:'IBM Plex Mono',monospace; font-size:11px; background:var(--bg-alt);
+    font-family:'Azeret Mono',monospace; font-size:11px; background:var(--bg-alt);
     border:1px solid var(--line); border-bottom-width:2px; border-radius:6px; padding:2px 7px; color:var(--ink-soft);
   }
   .toast{
@@ -317,7 +317,7 @@
 
   /* help modal */
   .modal-mask{
-    position:fixed; inset:0; background:rgba(5,7,13,.55); backdrop-filter:blur(4px);
+    position:fixed; inset:0; background:rgba(0,0,0,.6); backdrop-filter:blur(4px);
     z-index:150; display:none; align-items:center; justify-content:center; padding:20px;
   }
   .modal-mask.open{ display:flex; }
@@ -327,14 +327,14 @@
     animation: popIn .2s var(--ease);
   }
   .modal-head{ padding:20px 24px 14px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); }
-  .modal-head h3{ font-family:'Space Grotesk'; font-size:17px; }
+  .modal-head h3{ font-family:'Spectral',serif; font-size:17px; }
   .modal-body{ padding:20px 24px; }
-  .modal-body h5{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-faint); margin:18px 0 10px; }
+  .modal-body h5{ font-family:'Azeret Mono',monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-faint); margin:18px 0 10px; }
   .modal-body h5:first-child{ margin-top:0; }
   .kbd-grid{ display:grid; grid-template-columns:1fr 1fr; gap:8px 22px; }
   .kbd-grid div{ display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:13px; color:var(--ink-soft); }
   .kbd-grid kbd{
-    font-family:'IBM Plex Mono',monospace; font-size:11px; background:var(--bg-alt);
+    font-family:'Azeret Mono',monospace; font-size:11px; background:var(--bg-alt);
     border:1px solid var(--line); border-bottom-width:2px; border-radius:6px; padding:3px 8px; color:var(--ink); white-space:nowrap;
   }
   .modal-close{ border:none; background:none; color:var(--ink-faint); cursor:pointer; font-size:18px; padding:6px; border-radius:8px; }
@@ -351,6 +351,7 @@
     .inspector.open{ transform:none; }
     .hide-desktop{ display:inline-flex; }
   }
+
 </style>
 </head>
 <body>
@@ -410,7 +411,7 @@
       </button>
 
       <button class="tbtn" id="btnPriority" title="Prioridad (aplica a selección o a nuevos nodos)">
-        <span id="priIc" style="font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:12px">—</span>
+        <span id="priIc" style="font-family:'Azeret Mono',monospace; font-weight:700; font-size:12px">—</span>
         <span id="priName">Sin prioridad</span>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
         <div class="pop" id="priPop">
@@ -1281,7 +1282,7 @@ function renderWorld(g, opts){
     // badge de prioridad (arriba a la derecha)
     if (n.priority && PRIORITIES[n.priority] && n.type !== 'central'){
       var p = PRIORITIES[n.priority];
-      g.font = '700 9.5px "IBM Plex Mono", monospace';
+      g.font = '700 9.5px "Azeret Mono", monospace';
       var pw = 20;
       g.fillStyle = p.color;
       roundRect(g, hw - pw - 6, -hh + 4, pw, 14, 7); g.fill();
