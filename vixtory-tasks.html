@@ -164,6 +164,25 @@
   .fade-in { animation: cardFadeIn 0.3s ease; }
   @keyframes cardFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
+  /* ===== Límite de tiempo (cuenta regresiva) ===== */
+  .deadline-display {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: 'Azeret Mono', monospace; font-size: 0.75rem; font-weight: 600;
+    color: var(--warn); white-space: nowrap;
+  }
+  .deadline-display.low { color: var(--danger); animation: pulse 1.2s ease-in-out infinite; }
+  .task-card.timer-expired { border-color: var(--danger); }
+  .dl-switch {
+    position: relative; width: 40px; height: 23px; border-radius: 20px;
+    background: var(--line-strong); cursor: pointer; transition: background .2s; flex-shrink: 0; display: inline-block;
+  }
+  .dl-switch::after {
+    content: ''; position: absolute; top: 2.5px; left: 3px; width: 18px; height: 18px;
+    border-radius: 50%; background: #fff; transition: transform .25s var(--ease); box-shadow: 0 1px 4px rgba(0,0,0,.3);
+  }
+  .dl-switch.on { background: var(--grad); }
+  .dl-switch.on::after { transform: translateX(16px); }
+
 </style>
 </head>
 <body>
@@ -355,7 +374,38 @@
             </select>
           </div>
         </div>
-        
+
+        <!-- Sección Límite de Tiempo -->
+        <div class="mt-4 p-4 rounded-xl" style="border: 1px dashed var(--line); background: var(--bg-alt);">
+          <div class="flex items-center justify-between gap-3 flex-wrap">
+            <div>
+              <h3 class="text-sm font-bold mb-1">Límite de tiempo</h3>
+              <p class="text-xs" style="color: var(--ink-faint);">Cuenta regresiva que corre mientras la tarea esté <b>En proceso</b>. Si llega a 0 sin completarla, la tarea queda marcada como <b style="color: var(--danger);">Vencida</b>.</p>
+            </div>
+            <label class="flex items-center gap-2 cursor-pointer select-none" style="flex-shrink: 0;">
+              <span class="text-sm font-semibold" style="color: var(--ink);">Activar</span>
+              <span class="dl-switch" id="deadlineSwitchTrack"></span>
+              <input type="checkbox" id="taskDeadlineToggle" style="display: none;" onchange="toggleDeadlineConfig()" />
+            </label>
+          </div>
+          <div id="deadlineConfig" style="display: none;" class="mt-3">
+            <div class="flex items-end gap-2">
+              <div class="flex-1">
+                <label class="form-label" for="deadlineValue">Duración</label>
+                <input type="number" id="deadlineValue" class="form-input" min="1" max="10080" step="1" placeholder="30" />
+              </div>
+              <div style="width: 130px;">
+                <label class="form-label" for="deadlineUnit">Unidad</label>
+                <select id="deadlineUnit" class="form-select">
+                  <option value="minutes" selected>Minutos</option>
+                  <option value="hours">Horas</option>
+                </select>
+              </div>
+            </div>
+            <p class="text-xs mt-2" style="color: var(--ink-faint);">Ejemplo: 1 hora → la tarjeta mostrará una cuenta atrás de 01:00:00 mientras esté En proceso.</p>
+          </div>
+        </div>
+
         <!-- Sección de Importación -->
         <div class="mt-4 p-4 rounded-xl" style="border: 1px dashed var(--line); background: var(--bg-alt);">
           <h3 class="text-sm font-bold mb-1">Importar Base de Datos</h3>
@@ -509,6 +559,7 @@ function loadTasks() {
     if (rawDel) deletedTasks = JSON.parse(rawDel);
   } catch { deletedTasks = []; }
   
+  tasks.forEach(normalizeDeadline);
   saveTasks();
 }
 function saveTasks() { 
@@ -541,6 +592,89 @@ function formatTimeShort(seconds) {
   const m = Math.floor((seconds % 3600) / 60);
   return `${h}h ${m}m`;
 }
+function formatCountdown(ms) {
+  const total = Math.max(0, Math.floor(ms / 1000));
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = total % 60;
+  const p = n => String(n).padStart(2, '0');
+  return h > 0 ? `${p(h)}:${p(m)}:${p(s)}` : `${p(m)}:${p(s)}`;
+}
+
+/* ----- Límite de tiempo (cuenta regresiva) ----- */
+function toggleDeadlineConfig() {
+  const on = document.getElementById('taskDeadlineToggle').checked;
+  document.getElementById('deadlineConfig').style.display = on ? 'block' : 'none';
+  document.getElementById('deadlineSwitchTrack').classList.toggle('on', on);
+}
+function setDeadlineToggle(on, minutes) {
+  const cb = document.getElementById('taskDeadlineToggle');
+  cb.checked = !!on;
+  document.getElementById('deadlineConfig').style.display = on ? 'block' : 'none';
+  document.getElementById('deadlineSwitchTrack').classList.toggle('on', !!on);
+  if (on && minutes > 0) {
+    const unit = (minutes % 60 === 0 && minutes >= 60) ? 'hours' : 'minutes';
+    document.getElementById('deadlineUnit').value = unit;
+    document.getElementById('deadlineValue').value = unit === 'hours' ? Math.round(minutes / 60) : Math.round(minutes);
+  } else if (on) {
+    document.getElementById('deadlineUnit').value = 'minutes';
+    document.getElementById('deadlineValue').value = '';
+  }
+}
+function getDeadlineMinutesInput() {
+  const v = parseFloat(document.getElementById('deadlineValue').value);
+  const unit = document.getElementById('deadlineUnit').value;
+  if (!v || isNaN(v) || v <= 0) return 0;
+  return unit === 'hours' ? v * 60 : v;
+}
+/* Milisegundos restantes según el estado actual de la tarea */
+function deadlineRemainingMs(t) {
+  if (t.timerExpired) return 0;
+  if (t.status === 'in-progress' && t.deadlineCountStart) {
+    return Math.max(0, (t.deadlineLeftMs || 0) - (Date.now() - t.deadlineCountStart));
+  }
+  return t.deadlineLeftMs || 0;
+}
+/* Congela el conteo (al salir de En proceso) */
+function deadlineCommit(t) {
+  if (t.deadlineCountStart && t.status === 'in-progress') {
+    const spent = Date.now() - t.deadlineCountStart;
+    t.deadlineLeftMs = Math.max(0, (t.deadlineLeftMs || 0) - spent);
+    t.deadlineCountStart = null;
+    if (t.deadlineLeftMs === 0) t.timerExpired = true;
+  }
+}
+/* Reanuda el conteo (al entrar a En proceso) */
+function deadlineStart(t) {
+  if (!t || t.timerExpired || t.status !== 'in-progress') return;
+  if (!(t.deadlineLeftMs > 0)) return;
+  if (!t.deadlineCountStart) t.deadlineCountStart = Date.now();
+}
+function clearDeadline(t) {
+  delete t.deadlineMinutes;
+  delete t.deadlineLeftMs;
+  delete t.deadlineCountStart;
+  delete t.timerExpired;
+}
+/* Normaliza el estado del límite al cargar (sobrevive recargas) */
+function normalizeDeadline(t) {
+  if (t.deadlineMinutes == null) return;
+  if (t.deadlineLeftMs == null) t.deadlineLeftMs = t.deadlineMinutes * 60000;
+  if (t.status !== 'in-progress') {
+    t.deadlineCountStart = null;
+  } else if (!t.deadlineCountStart && !t.timerExpired && (t.deadlineLeftMs || 0) > 0) {
+    t.deadlineCountStart = Date.now();
+  }
+  if (t.deadlineCountStart) {
+    const left = (t.deadlineLeftMs || 0) - (Date.now() - t.deadlineCountStart);
+    if (left <= 0) {
+      t.deadlineLeftMs = 0;
+      t.deadlineCountStart = null;
+      t.timerExpired = true;
+    }
+  }
+}
+
 function formatDate(iso) {
   if (!iso) return null;
   const d = new Date(iso + 'T00:00:00');
@@ -562,7 +696,9 @@ function isThisWeek(iso) {
   return d >= monday && d <= sunday;
 }
 function isOverdue(t) {
-  if (!t.dueDate || t.status === 'done' || t.status === 'archived') return false;
+  if (!t || t.status === 'done' || t.status === 'archived') return false;
+  if (t.timerExpired) return true;
+  if (!t.dueDate) return false;
   const today = new Date(); today.setHours(0,0,0,0);
   const d = new Date(t.dueDate + 'T00:00:00');
   return d < today;
@@ -626,6 +762,7 @@ function renderCard(t) {
   
   if (runningTimers[t.id]) card.classList.add('timer-active');
   if (expandedTasks.has(t.id)) card.classList.add('expanded');
+  if (t.timerExpired) card.classList.add('timer-expired');
 
   const priorityClass = `priority-${t.priority}`;
   const priorityLabel = { high: 'Alta', medium: 'Media', low: 'Baja' }[t.priority];
@@ -658,6 +795,25 @@ function renderCard(t) {
     }
   }
 
+  // Chip del pie: si hay límite de tiempo activo se muestra la cuenta regresiva;
+  // si no, el cronómetro de trabajo que ya existía.
+  const hasDl = t.deadlineMinutes != null;
+  const dlActive = hasDl && !t.timerExpired && (t.status === 'todo' || t.status === 'in-progress' || t.status === 'paused');
+  const dlOver = hasDl && t.timerExpired === true && (t.status === 'todo' || t.status === 'in-progress' || t.status === 'paused');
+  let deadlineChip = '';
+  if (dlActive) {
+    const rem = deadlineRemainingMs(t);
+    deadlineChip = `<span class="task-meta-item deadline-display${rem <= 60000 ? ' low' : ''}" data-id="${t.id}"><i class="ti ti-timer"></i> ${formatCountdown(rem)}</span>`;
+    timerControl = '';
+  } else if (dlOver) {
+    deadlineChip = `<span class="task-meta-item deadline-display low"><i class="ti ti-alert-triangle"></i> Vencida</span>`;
+    timerControl = '';
+  }
+  const workChip = deadlineChip ? '' : `<span class="task-meta-item timer-display" style="font-size: 0.75rem;">
+          ${runningTimers[t.id] ? '<i class="ti ti-player-play-filled"></i> ' : '<i class="ti ti-clock"></i> '}
+          ${formatTime(t.accumulatedTime + elapsedSec(t.id))}
+        </span>`;
+
   card.innerHTML = `
     <div class="task-header" onclick="toggleExpand('${t.id}')" ${btnAttrs}>
       <div class="task-title">${escapeHtml(t.title)}</div>
@@ -667,10 +823,8 @@ function renderCard(t) {
     
     <div class="task-footer">
       <div class="flex items-center gap-2">
-        <span class="task-meta-item timer-display" style="font-size: 0.75rem;">
-          ${runningTimers[t.id] ? '<i class="ti ti-player-play-filled"></i> ' : '<i class="ti ti-clock"></i> '}
-          ${formatTime(t.accumulatedTime + elapsedSec(t.id))}
-        </span>
+        ${deadlineChip}
+        ${workChip}
         ${timerControl}
       </div>
       <div class="flex items-center gap-2">
@@ -692,6 +846,10 @@ function renderCard(t) {
         ${due ? `
         <span class="tag" style="background: ${overdue ? 'var(--danger-soft)' : 'var(--bg-alt)'}; color: ${overdue ? 'var(--danger)' : 'var(--ink-faint)'};">
           <i class="ti ti-calendar" style="font-size:0.75rem;"></i> ${due}
+        </span>` : ''}
+        ${t.timerExpired ? `
+        <span class="tag" style="background: var(--danger-soft); color: var(--danger);">
+          <i class="ti ti-alert-triangle" style="font-size:0.75rem;"></i> Vencida por límite de tiempo
         </span>` : ''}
       </div>
       
@@ -733,8 +891,22 @@ function transitionTask(id, newStatus) {
   if (runningTimers[id] && newStatus !== 'in-progress') {
     stopTimer(id, false);
   }
-  
+
+  // Cuenta regresiva: se congela al salir de "En proceso" y se descarta al terminar/archivar.
+  const hadDl = t.deadlineMinutes != null;
+  if (hadDl && t.status === 'in-progress' && newStatus !== 'in-progress') deadlineCommit(t);
+
   t.status = newStatus;
+
+  if (hadDl) {
+    if (newStatus === 'in-progress' && !t.timerExpired && (t.deadlineLeftMs || 0) > 0) {
+      deadlineStart(t);
+    } else if (newStatus !== 'in-progress') {
+      t.deadlineCountStart = null;
+    }
+    if (newStatus === 'done' || newStatus === 'archived') clearDeadline(t);
+  }
+
   saveTasks();
   
   if (newStatus === 'in-progress') {
@@ -853,6 +1025,9 @@ function openTaskModal(id = null) {
     document.getElementById('taskDueDate').value = new Date().toISOString().slice(0,10);
     document.getElementById('deleteBtn').style.display = 'none';
   }
+  const editingT = id ? tasks.find(x => x.id === id) : null;
+  setDeadlineToggle(!!(editingT && editingT.deadlineMinutes != null), editingT ? editingT.deadlineMinutes : 0);
+
   modal.style.display = 'flex';
   setTimeout(() => document.getElementById('taskTitle').focus(), 100);
 }
@@ -871,16 +1046,45 @@ function saveTask(e) {
     category: document.getElementById('taskCategory').value
   };
   if (!data.title) { showToast('El título es obligatorio', 'error'); return; }
-  
+
+  const dlOn = document.getElementById('taskDeadlineToggle').checked;
+  const dlMinutes = dlOn ? getDeadlineMinutesInput() : 0;
+  if (dlOn && !dlMinutes) { showToast('Configura la duración del límite de tiempo', 'error'); return; }
+
   if (id) {
     const t = tasks.find(x => x.id === id);
     if (t) {
+      // Si sale de "En proceso" por edición, congelar la cuenta regresiva restando lo transcurrido.
+      if (t.status === 'in-progress' && data.status !== 'in-progress' && t.deadlineCountStart) deadlineCommit(t);
       Object.assign(t, data);
       if (runningTimers[id] && data.status !== 'in-progress') stopTimer(id, false);
+      // Límite al editar: misma duración conserva el avance; duración nueva (o límite nuevo) reinicia; apagado lo quita.
+      if (dlOn) {
+        // Una tarea ya vencida se reactiva al guardar (aunque la duración no cambie).
+        if (t.deadlineMinutes != null && t.deadlineMinutes === dlMinutes && !t.timerExpired) {
+          if (t.status === 'in-progress' && !t.timerExpired && (t.deadlineLeftMs || 0) > 0) deadlineStart(t);
+          else t.deadlineCountStart = null;
+        } else {
+          t.deadlineMinutes = dlMinutes;
+          t.deadlineLeftMs = dlMinutes * 60000;
+          t.deadlineCountStart = null;
+          t.timerExpired = false;
+          if (t.status === 'in-progress') deadlineStart(t);
+        }
+      } else {
+        clearDeadline(t);
+      }
     }
     showToast('Tarea actualizada', 'success');
   } else {
-    tasks.push({ id: uid(), ...data, createdAt: new Date().toISOString(), accumulatedTime: 0 });
+    const nt = { id: uid(), ...data, createdAt: new Date().toISOString(), accumulatedTime: 0 };
+    if (dlOn) {
+      nt.deadlineMinutes = dlMinutes;
+      nt.deadlineLeftMs = dlMinutes * 60000;
+      nt.deadlineCountStart = null;
+      if (nt.status === 'in-progress') deadlineStart(nt);
+    }
+    tasks.push(nt);
     showToast('Tarea creada', 'success');
   }
   
@@ -1224,10 +1428,36 @@ document.addEventListener('keydown', e => {
 loadTasks();
 renderAll();
 
-setInterval(() => {
+function tick() {
+  const now = Date.now();
+
+  // 1) Vencimientos de cuenta regresiva (solo corre en "En proceso")
+  let expired = false;
+  tasks.forEach(t => {
+    if (t.deadlineMinutes != null && !t.timerExpired && t.status === 'in-progress' && t.deadlineCountStart) {
+      const left = (t.deadlineLeftMs || 0) - (now - t.deadlineCountStart);
+      if (left <= 0) {
+        t.deadlineLeftMs = 0;
+        t.deadlineCountStart = null;
+        t.timerExpired = true;
+        expired = true;
+        showToast(`Límite de tiempo vencido: ${t.title}`, 'error');
+      }
+    }
+  });
+  if (expired) { saveTasks(); renderAll(); }
+
+  // 2) Actualizar chips de cuenta regresiva visibles (y aviso de poco tiempo)
+  document.querySelectorAll('.deadline-display[data-id]').forEach(el => {
+    const t = tasks.find(x => x.id === el.dataset.id);
+    if (!t || t.timerExpired) return;
+    const rem = deadlineRemainingMs(t);
+    el.innerHTML = `<i class="ti ti-timer"></i> ${formatCountdown(rem)}`;
+    el.classList.toggle('low', rem <= 60000);
+  });
+
+  // 3) Cronómetros de trabajo (los ya existentes)
   const ids = Object.keys(runningTimers);
-  if (ids.length === 0) return;
-  
   ids.forEach(id => {
     const card = document.querySelector(`.task-card[data-id="${id}"] .timer-display`);
     if (card) {
@@ -1238,8 +1468,10 @@ setInterval(() => {
       }
     }
   });
+
   updateTimerBar();
-}, 1000);
+}
+setInterval(tick, 1000);
 </script>
 </body>
 </html>
