@@ -656,6 +656,17 @@ function clearDeadline(t) {
   delete t.deadlineCountStart;
   delete t.timerExpired;
 }
+/* Al terminar/archivar: si estaba vencida se conserva la marca "vencida"
+   (para que en Completadas siga mostrando el estado); si no, se descarta el límite. */
+function finishDeadline(t) {
+  if (t.timerExpired) {
+    delete t.deadlineMinutes;
+    delete t.deadlineLeftMs;
+    delete t.deadlineCountStart;
+  } else {
+    clearDeadline(t);
+  }
+}
 /* Normaliza el estado del límite al cargar (sobrevive recargas) */
 function normalizeDeadline(t) {
   if (t.deadlineMinutes == null) return;
@@ -796,10 +807,11 @@ function renderCard(t) {
   }
 
   // Chip del pie: si hay límite de tiempo activo se muestra la cuenta regresiva;
+  // si la tarea quedó vencida (incluso ya completada/archivada) se muestra "Vencida";
   // si no, el cronómetro de trabajo que ya existía.
-  const hasDl = t.deadlineMinutes != null;
-  const dlActive = hasDl && !t.timerExpired && (t.status === 'todo' || t.status === 'in-progress' || t.status === 'paused');
-  const dlOver = hasDl && t.timerExpired === true && (t.status === 'todo' || t.status === 'in-progress' || t.status === 'paused');
+  const isVencida = t.timerExpired === true;
+  const dlActive = !isVencida && t.deadlineMinutes != null && (t.status === 'todo' || t.status === 'in-progress' || t.status === 'paused');
+  const dlOver = isVencida && (t.status === 'todo' || t.status === 'in-progress' || t.status === 'paused' || t.status === 'done' || t.status === 'archived');
   let deadlineChip = '';
   if (dlActive) {
     const rem = deadlineRemainingMs(t);
@@ -892,8 +904,9 @@ function transitionTask(id, newStatus) {
     stopTimer(id, false);
   }
 
-  // Cuenta regresiva: se congela al salir de "En proceso" y se descarta al terminar/archivar.
-  const hadDl = t.deadlineMinutes != null;
+  // Cuenta regresiva: se congela al salir de "En proceso"; al terminar/archivar
+  // se conserva la marca "vencida" si la tarea había vencido.
+  const hadDl = t.deadlineMinutes != null || t.timerExpired === true;
   if (hadDl && t.status === 'in-progress' && newStatus !== 'in-progress') deadlineCommit(t);
 
   t.status = newStatus;
@@ -904,7 +917,7 @@ function transitionTask(id, newStatus) {
     } else if (newStatus !== 'in-progress') {
       t.deadlineCountStart = null;
     }
-    if (newStatus === 'done' || newStatus === 'archived') clearDeadline(t);
+    if (newStatus === 'done' || newStatus === 'archived') finishDeadline(t);
   }
 
   saveTasks();
@@ -1058,21 +1071,27 @@ function saveTask(e) {
       if (t.status === 'in-progress' && data.status !== 'in-progress' && t.deadlineCountStart) deadlineCommit(t);
       Object.assign(t, data);
       if (runningTimers[id] && data.status !== 'in-progress') stopTimer(id, false);
-      // Límite al editar: misma duración conserva el avance; duración nueva (o límite nuevo) reinicia; apagado lo quita.
-      if (dlOn) {
-        // Una tarea ya vencida se reactiva al guardar (aunque la duración no cambie).
-        if (t.deadlineMinutes != null && t.deadlineMinutes === dlMinutes && !t.timerExpired) {
-          if (t.status === 'in-progress' && !t.timerExpired && (t.deadlineLeftMs || 0) > 0) deadlineStart(t);
-          else t.deadlineCountStart = null;
-        } else {
-          t.deadlineMinutes = dlMinutes;
-          t.deadlineLeftMs = dlMinutes * 60000;
-          t.deadlineCountStart = null;
-          t.timerExpired = false;
-          if (t.status === 'in-progress') deadlineStart(t);
-        }
+      // Si el estado final es completada/archivada: conservar la marca "vencida" si la había
+      // (el resto del límite se descarta; el interruptor no aplica).
+      if (t.status === 'done' || t.status === 'archived') {
+        finishDeadline(t);
       } else {
-        clearDeadline(t);
+        // Límite al editar: misma duración conserva el avance; duración nueva (o límite nuevo) reinicia; apagado lo quita.
+        if (dlOn) {
+          // Una tarea ya vencida se reactiva al guardar (aunque la duración no cambie).
+          if (t.deadlineMinutes != null && t.deadlineMinutes === dlMinutes && !t.timerExpired) {
+            if (t.status === 'in-progress' && !t.timerExpired && (t.deadlineLeftMs || 0) > 0) deadlineStart(t);
+            else t.deadlineCountStart = null;
+          } else {
+            t.deadlineMinutes = dlMinutes;
+            t.deadlineLeftMs = dlMinutes * 60000;
+            t.deadlineCountStart = null;
+            t.timerExpired = false;
+            if (t.status === 'in-progress') deadlineStart(t);
+          }
+        } else {
+          clearDeadline(t);
+        }
       }
     }
     showToast('Tarea actualizada', 'success');
@@ -1084,6 +1103,7 @@ function saveTask(e) {
       nt.deadlineCountStart = null;
       if (nt.status === 'in-progress') deadlineStart(nt);
     }
+    if (nt.status === 'done' || nt.status === 'archived') finishDeadline(nt);
     tasks.push(nt);
     showToast('Tarea creada', 'success');
   }
