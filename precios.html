@@ -289,6 +289,7 @@
   .modal-overlay.open{ display:flex; }
   .modal-box{
     background:#fff; border-radius:18px; padding:36px; max-width:440px; width:100%;
+    max-height:88vh; overflow-y:auto;
     position:relative; box-shadow:0 30px 60px -12px rgba(14,20,40,.35);
     animation:modalIn .25s var(--ease);
   }
@@ -842,7 +843,7 @@
       <h3>Agenda tu cita para diagnóstico inicial</h3>
       <p>De manera completamente personalizada. Cuéntanos qué necesitas y te enviamos una propuesta hecha a tu medida.</p>
       <div class="biz-actions">
-        <button type="button" class="btn btn-accent" onclick="openEmailModal('Agendar cita de diagnóstico inicial')">
+        <button type="button" class="btn btn-accent" onclick="openAgendaModal()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="#fff" stroke-width="1.5"/><path d="M3 10h18M8 3v4M16 3v4" stroke="#fff" stroke-width="1.5"/></svg>
           Agendar cita
         </button>
@@ -895,6 +896,47 @@
         <textarea id="cf-mensaje" required placeholder="Cuéntanos brevemente sobre tu proyecto o necesidad"></textarea>
       </div>
       <button type="submit" class="btn btn-primary btn-block">Enviar mensaje</button>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL AGENDAR CITA -->
+<div class="modal-overlay" id="agendaModal">
+  <div class="modal-box">
+    <button type="button" class="modal-close" onclick="closeAgendaModal()" aria-label="Cerrar">&times;</button>
+    <div class="eyebrow" style="margin-bottom:6px;">AGENDA TU CITA</div>
+    <h3 style="font-family:'Spectral'; font-size:22px; font-weight:600; margin-bottom:6px;">Diagnóstico inicial sin costo</h3>
+    <p style="font-size:13.5px; color:var(--ink-soft); margin-bottom:22px;">30 minutos para revisar tu operación y mostrarte dónde la IA te ahorra tiempo. Te confirmamos la cita por correo.</p>
+    <form id="agendaForm" onsubmit="return sendAgenda(event)">
+      <div class="form-field">
+        <label for="ag-nombre">Nombre</label>
+        <input type="text" id="ag-nombre" required placeholder="Tu nombre completo">
+      </div>
+      <div class="form-field">
+        <label for="ag-correo">Correo</label>
+        <input type="email" id="ag-correo" required placeholder="tucorreo@empresa.com">
+      </div>
+      <div class="form-field">
+        <label for="ag-fecha">Fecha de la cita</label>
+        <input type="date" id="ag-fecha" required>
+      </div>
+      <div class="form-field">
+        <label for="ag-hora">Hora de la cita</label>
+        <input type="time" id="ag-hora" required>
+      </div>
+      <div class="form-field">
+        <label for="ag-plataforma">Plataforma</label>
+        <select id="ag-plataforma" required>
+          <option value="Google Meet">Google Meet</option>
+          <option value="Microsoft Teams">Microsoft Teams</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="ag-mensaje">Mensaje</label>
+        <textarea id="ag-mensaje" placeholder="Cuéntanos brevemente qué quieres automatizar">Quiero agendar una cita para el diagnóstico inicial de mi negocio.</textarea>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" id="ag-submit">Agendar cita</button>
+      <p id="ag-status" style="display:none; font-size:12.5px; margin-top:12px; text-align:center; line-height:1.5;"></p>
     </form>
   </div>
 </div>
@@ -1000,11 +1042,7 @@
 
   // modal contacto
   const CONTACT_EMAIL = 'contacto@vixtory.tech';
-  function openEmailModal(asunto){
-    const f = document.getElementById('cf-mensaje');
-    if (asunto && f) { f.value = 'Quiero agendar una cita para el diagnóstico inicial de mi negocio.'; }
-    document.getElementById('emailModal').classList.add('open'); document.body.style.overflow='hidden';
-  }
+  function openEmailModal(){ document.getElementById('emailModal').classList.add('open'); document.body.style.overflow='hidden'; }
   function closeEmailModal(){ document.getElementById('emailModal').classList.remove('open'); document.body.style.overflow=''; }
   function sendContactEmail(e){
     e.preventDefault();
@@ -1017,6 +1055,47 @@
     return false;
   }
   document.getElementById('emailModal').addEventListener('click', (e) => { if(e.target.id === 'emailModal') closeEmailModal(); });
+
+  // modal agendar cita
+  function openAgendaModal(){
+    const f = document.getElementById('ag-fecha');
+    if (f && !f.value) { const d = new Date(); d.setDate(d.getDate()+1); f.value = d.toISOString().slice(0,10); }
+    const st = document.getElementById('ag-status'); if (st) st.style.display = 'none';
+    document.getElementById('agendaModal').classList.add('open'); document.body.style.overflow='hidden';
+  }
+  function closeAgendaModal(){ document.getElementById('agendaModal').classList.remove('open'); document.body.style.overflow=''; }
+  async function sendAgenda(e){
+    e.preventDefault();
+    const btn = document.getElementById('ag-submit');
+    const st = document.getElementById('ag-status');
+    const data = {
+      nombre: document.getElementById('ag-nombre').value.trim(),
+      correo: document.getElementById('ag-correo').value.trim(),
+      fecha: document.getElementById('ag-fecha').value,
+      hora: document.getElementById('ag-hora').value,
+      plataforma: document.getElementById('ag-plataforma').value,
+      mensaje: document.getElementById('ag-mensaje').value.trim()
+    };
+    btn.disabled = true; btn.textContent = 'Enviando…';
+    try {
+      const r = await fetch('https://leads.vixtory.tech/agenda', {
+        method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)
+      });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      document.getElementById('agendaForm').reset();
+      st.textContent = '✅ Recibimos tu solicitud. Te confirmamos la cita por correo en menos de 24 horas.';
+      st.style.color = 'var(--accent)'; st.style.display = 'block';
+      btn.textContent = 'Cita solicitada';
+    } catch (err) {
+      const subject = encodeURIComponent('Agendar cita de diagnóstico inicial');
+      const body = encodeURIComponent('Nombre: ' + data.nombre + '\nCorreo: ' + data.correo + '\nFecha: ' + data.fecha + '\nHora: ' + data.hora + '\nPlataforma: ' + data.plataforma + '\n\n' + data.mensaje);
+      window.location.href = 'mailto:contacto@vixtory.tech?subject=' + subject + '&body=' + body;
+      btn.disabled = false; btn.textContent = 'Agendar cita';
+    }
+    return false;
+  }
+  document.addEventListener('click', (e) => { if(e.target.id === 'agendaModal') closeAgendaModal(); });
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape'){ closeEmailModal(); closeAgendaModal(); } });
   document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeEmailModal(); });
 </script>
 
