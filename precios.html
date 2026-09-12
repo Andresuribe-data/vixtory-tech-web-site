@@ -467,6 +467,20 @@
   .pkg-name{ font-family:'Spectral',serif; font-weight:600; font-size:19px; margin-bottom:6px; }
   .pkg-price{ font-family:'Spectral',serif; font-weight:600; font-size:26px; margin-bottom:4px; }
   .pkg-price span{ font-family:'Azeret Mono',monospace; font-size:11px; color:var(--ink-faint); font-weight:400; }
+  .pkg-recur{ font-family:'Spectral',serif; font-weight:700; font-size:36px; line-height:1; margin:12px 0 2px; letter-spacing:-.5px; }
+  .pkg-recur span{ font-family:'Azeret Mono',monospace; font-size:12px; color:var(--ink-faint); font-weight:400; letter-spacing:0; }
+  .pkg-recur-sub{ font-family:'Azeret Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-faint); margin-bottom:4px; }
+  .pkg-setup{
+    font-family:'Azeret Mono',monospace; font-size:11px; color:var(--ink-faint);
+    margin-top:16px; padding-top:12px; border-top:1px dashed var(--line); line-height:1.5;
+  }
+  .pkg-setup b{ color:var(--ink-soft); font-weight:600; }
+  .pkg-promo{
+    margin-top:22px; padding:16px 20px; border:1px dashed var(--accent); border-radius:14px;
+    background:var(--surface); font-size:13px; color:var(--ink-soft); text-align:center; line-height:1.55;
+  }
+  .pkg-promo strong{ color:var(--ink); font-weight:600; }
+  .pkg-promo small{ display:block; margin-top:6px; font-family:'Azeret Mono',monospace; font-size:10.5px; color:var(--ink-faint); letter-spacing:.02em; }
   .pkg-list{ list-style:none; margin:18px 0 22px; flex:1; }
   .pkg-list li{ font-size:13px; color:var(--ink-soft); padding-left:22px; position:relative; margin-bottom:10px; line-height:1.4; }
   .pkg-list li::before{ content:'✓'; position:absolute; left:0; top:0; color:var(--accent); font-weight:700; font-size:12px; }
@@ -737,27 +751,35 @@
     <div class="pkg-grid">
       <div class="pkg-card reveal">
         <div class="pkg-name">Vixtory Starter</div>
+        <div class="pkg-recur-sub">Valor mensual</div>
+        <div class="pkg-recur">$180.000 <span>COP / mes</span></div>
         <ul class="pkg-list">
           <li>Consultoría inicial</li>
           <li>Análisis de datos</li>
         </ul>
-        <button type="button" class="btn btn-secondary btn-block" onclick="openEmailModal()">Cotizar plan</button>
+        <button type="button" class="btn btn-secondary btn-block" onclick="openEmailModal()">Seleccionar plan</button>
+        <div class="pkg-setup">Pago inicial único: <b>$990.000 COP</b></div>
       </div>
 
       <div class="pkg-card reveal">
         <div class="pkg-name">Vixtory Tech</div>
+        <div class="pkg-recur-sub">Valor mensual</div>
+        <div class="pkg-recur">$350.000 <span>COP / mes</span></div>
         <ul class="pkg-list">
           <li>Consultoría</li>
           <li>Creación de página web</li>
           <li>Integración de IA</li>
           <li>1 estructura de automatización</li>
         </ul>
-        <button type="button" class="btn btn-secondary btn-block" onclick="openEmailModal()">Cotizar plan</button>
+        <button type="button" class="btn btn-secondary btn-block" onclick="openEmailModal()">Seleccionar plan</button>
+        <div class="pkg-setup">Pago inicial único: <b>$2.900.000 COP</b></div>
       </div>
 
       <div class="pkg-card featured reveal">
         <div class="pkg-badge">Más elegido</div>
         <div class="pkg-name">Vixtory Pro</div>
+        <div class="pkg-recur-sub">Valor mensual</div>
+        <div class="pkg-recur">$850.000 <span>COP / mes</span></div>
         <ul class="pkg-list">
           <li>Consultoría</li>
           <li>Creación de página web</li>
@@ -765,11 +787,14 @@
           <li>3 estructuras de automatización</li>
           <li>1 agente personal o empresarial integrado a WhatsApp / Telegram</li>
         </ul>
-        <button type="button" class="btn btn-primary btn-block" onclick="openEmailModal()">Cotizar plan</button>
+        <button type="button" class="btn btn-primary btn-block" onclick="openEmailModal()">Seleccionar plan</button>
+        <div class="pkg-setup">Pago inicial único: <b>$4.500.000 COP</b></div>
       </div>
 
       <div class="pkg-card reveal">
         <div class="pkg-name">Vixtory Ultimate</div>
+        <div class="pkg-recur-sub">Valor mensual</div>
+        <div class="pkg-recur">$1.099.000 <span>COP / mes</span></div>
         <ul class="pkg-list">
           <li>Consultoría</li>
           <li>Creación de página web</li>
@@ -777,8 +802,14 @@
           <li>5 estructuras de automatización</li>
           <li>3 agentes personal o empresarial integrados a WhatsApp / Telegram</li>
         </ul>
-        <button type="button" class="btn btn-secondary btn-block" onclick="openEmailModal()">Cotizar plan</button>
+        <button type="button" class="btn btn-secondary btn-block" onclick="openEmailModal()">Seleccionar plan</button>
+        <div class="pkg-setup">Pago inicial único: <b>$6.900.000 COP</b></div>
       </div>
+    </div>
+
+    <div class="pkg-promo reveal">
+      <strong>Promoción de lanzamiento — 50% de descuento en el pago inicial</strong> para los primeros 3 clientes que contraten cualquier paquete.
+      <small>Aplican términos y condiciones. El descuento aplica únicamente sobre el pago inicial único, no sobre el valor mensual. Vigencia sujeta a disponibilidad de cupos.</small>
     </div>
 
     <div class="biz-cta reveal" id="contacto-empresas">
