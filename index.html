@@ -28,44 +28,53 @@
   "knowsAbout": ["Inteligencia Artificial", "Automatización", "Datos", "Consultoría"]
 }
 </script>
-<script>(function(){try{if(localStorage.getItem('vixtory.theme')==='dark'){document.documentElement.setAttribute('data-theme','dark');document.documentElement.style.colorScheme='dark';}}catch(e){}})();</script>
+<script>(function(){try{if(localStorage.getItem('vixtory.theme')==='light'){document.documentElement.setAttribute('data-theme','light');document.documentElement.style.colorScheme='light';}}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600&family=Outfit:wght@400;500;600;700&family=Azeret+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#F2F0E6; --bg-alt:#EAE7DB; --surface:#FFFFFF;
-    --ink:#161F38; --ink-soft:#565F7D; --ink-faint:#8890A8;
-    --line:rgba(22,31,56,.12); --line-strong:rgba(22,31,56,.22);
-    --blue:#4F6FEF; --violet:#8B5CF6; --accent:#4F6FEF; --accent-soft:#8B5CF6;
-    --grad:linear-gradient(135deg,#4F6FEF 0%,#8B5CF6 100%);
-    --dark:#0E1428; --dark-ink:#F2F0E6; --dark-muted:#A3A9CC;
+    /* ===== Tema oscuro por defecto (estilo "Evolute") ===== */
+    --bg:#000000; --bg-alt:#0A0A0A; --surface:#111111;
+    --ink:#F5F3EC; --ink-soft:#B4B7C4; --ink-faint:#83879A;
+    --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.2);
+    --blue:#4F6FEF; --violet:#8B5CF6;
+    --accent:#FF8A1E; --accent-soft:#FFB25E; --accent2:#8B5CF6;
+    --grad:linear-gradient(135deg,#FF8A1E 0%,#8B5CF6 100%);
+    --dark:#000000; --dark-ink:#F5F3EC; --dark-muted:#A3A9CC;
     --dark-line:rgba(255,255,255,.10);
     --radius:16px; --radius-sm:12px;
     --ease:cubic-bezier(.16,.84,.44,1);
-    --shadow-card:0 24px 44px -28px rgba(22,31,56,.28);
-    --shadow-lift:0 26px 52px -24px rgba(22,31,56,.32);
-  }
-  /* Tema oscuro: NEGRO puro (no azul) */
-  [data-theme="dark"]{
-    --bg:#000000; --bg-alt:#0C0C0C; --surface:#121212;
-    --ink:#F5F3EC; --ink-soft:#B4B7C4; --ink-faint:#83879A;
-    --line:rgba(255,255,255,.12); --line-strong:rgba(255,255,255,.2);
     --shadow-card:0 24px 44px -28px rgba(0,0,0,.8);
     --shadow-lift:0 26px 52px -24px rgba(0,0,0,.85);
   }
-  [data-theme="dark"] header.scrolled{ background:rgba(0,0,0,.85); }
-  [data-theme="dark"] .cta-dark{ background:#0A0A0A; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
-  [data-theme="dark"] .cta-dark::before{ opacity:.5; }
-  [data-theme="dark"] .wa-float{ background:var(--ink); color:#0A0A0A; box-shadow:0 14px 30px -10px rgba(0,0,0,.7); }
-  [data-theme="dark"] .wa-float .wa-ic path{ stroke:#0A0A0A; }
-  [data-theme="dark"] .theme-toggle{ background:var(--surface); color:var(--ink-soft); }
-  [data-theme="dark"] .icon-badge{ background:rgba(255,255,255,.045); }
-  [data-theme="dark"] .modal-overlay{ background:rgba(0,0,0,.72); }
-  [data-theme="dark"] .modal-box{ background:#131313; border:1px solid var(--line); }
-  [data-theme="dark"] .brand img,
-  [data-theme="dark"] .footer-brand img{ filter:brightness(0) invert(1); }
-  [data-theme="dark"] .hero-visual .mark{ filter:brightness(0) invert(1) drop-shadow(0 30px 50px rgba(0,0,0,.55)); }
+  /* Tema claro (ahora es el alterno, activable con el toggle) */
+  [data-theme="light"]{
+    --bg:#F2F0E6; --bg-alt:#EAE7DB; --surface:#FFFFFF;
+    --ink:#161F38; --ink-soft:#565F7D; --ink-faint:#8890A8;
+    --line:rgba(22,31,56,.12); --line-strong:rgba(22,31,56,.22);
+    --accent:#4F6FEF; --accent-soft:#8B5CF6;
+    --grad:linear-gradient(135deg,#4F6FEF 0%,#8B5CF6 100%);
+    --shadow-card:0 24px 44px -28px rgba(22,31,56,.28);
+    --shadow-lift:0 26px 52px -24px rgba(22,31,56,.32);
+  }
+  /* Header/nav siempre oscuro al hacer scroll (look Evolute) salvo en tema claro */
+  header.scrolled{ background:rgba(0,0,0,.85); }
+  [data-theme="light"] header.scrolled{ background:rgba(242,240,230,.88); }
+  .cta-dark{ background:#0A0A0A; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .cta-dark::before{ opacity:.5; }
+  .wa-float{ background:var(--accent); color:#0A0A0A; box-shadow:0 14px 30px -10px rgba(0,0,0,.7); }
+  .wa-float .wa-ic path{ stroke:#0A0A0A; }
+  .theme-toggle{ background:var(--surface); color:var(--ink-soft); }
+  .icon-badge{ background:rgba(255,255,255,.045); }
+  [data-theme="light"] .icon-badge{ background:var(--bg); }
+  .modal-overlay{ background:rgba(0,0,0,.72); }
+  .modal-box{ background:#131313; border:1px solid var(--line); }
+  [data-theme="light"] .modal-box{ background:#fff; }
+  /* El logo actual funciona bien en fondo oscuro (asumido claro/blanco); en tema claro se invierte si hace falta */
+  [data-theme="light"] .brand img,
+  [data-theme="light"] .footer-brand img{ filter:invert(1); }
+  .hero-visual .mark{ filter:drop-shadow(0 30px 60px rgba(255,138,30,.25)); }
   @media (prefers-reduced-motion: no-preference){
     body{ transition:background .3s var(--ease), color .3s var(--ease); }
   }
@@ -104,9 +113,9 @@
   }
   .theme-toggle:hover{ color:var(--ink); border-color:var(--line-strong); }
   .theme-toggle svg{ width:18px; height:18px; }
-  .theme-toggle .icon-moon{ display:none; }
-  [data-theme="dark"] .theme-toggle .icon-sun{ display:none; }
-  [data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
+  .theme-toggle .icon-sun{ display:none; }
+  [data-theme="light"] .theme-toggle .icon-sun{ display:block; }
+  [data-theme="light"] .theme-toggle .icon-moon{ display:none; }
 
   /* ---------- NAV ---------- */
   header{
@@ -140,10 +149,18 @@
 
   /* ---------- HERO ---------- */
   .hero{ position:relative; padding:190px 0 110px; overflow:hidden; }
+  .hero::before{
+    content:''; position:absolute; inset:-10% -10% auto -10%; height:120%;
+    background:
+      radial-gradient(circle at 20% 25%, rgba(255,138,30,.20), transparent 45%),
+      radial-gradient(circle at 85% 65%, rgba(139,92,246,.18), transparent 45%);
+    pointer-events:none; z-index:0;
+  }
+  .hero .wrap{ position:relative; z-index:1; }
   .hero-grid{ display:grid; grid-template-columns:1.05fr .85fr; gap:44px; align-items:center; }
   .hero h1{
-    font-family:'Spectral',serif; font-weight:500;
-    font-size:clamp(2.2rem,4.4vw,3.3rem); line-height:1.16;
+    font-family:'Outfit',sans-serif; font-weight:700;
+    font-size:clamp(2.6rem,5.6vw,4.2rem); line-height:1.05; letter-spacing:-.02em;
     margin:20px 0 22px; color:var(--ink);
   }
   .hero p.lead{ font-size:16.5px; line-height:1.7; color:var(--ink-soft); max-width:480px; margin-bottom:34px; }
@@ -155,7 +172,7 @@
     transition:transform .25s, box-shadow .25s, border-color .25s;
     cursor:pointer; border:none;
   }
-  .btn-primary{ background:var(--accent); color:#fff; box-shadow:0 14px 28px -12px rgba(79,111,239,.5); }
+  .btn-primary{ background:var(--accent); color:#fff; box-shadow:0 14px 28px -12px rgba(255,138,30,.5); }
   .btn-primary:hover{ transform:translateY(-3px); box-shadow:0 18px 34px -12px rgba(139,92,246,.55); }
   .btn-secondary{ background:transparent; color:var(--ink); border:1px solid var(--line-strong); }
   .btn-secondary:hover{ border-color:var(--ink); transform:translateY(-3px); }
@@ -724,14 +741,14 @@
   const THEME_KEY = 'vixtory.theme';
   const themeToggle = document.getElementById('themeToggle');
   function applyTheme(theme){
-    if(theme === 'dark'){ document.documentElement.setAttribute('data-theme', 'dark'); }
+    if(theme === 'light'){ document.documentElement.setAttribute('data-theme', 'light'); }
     else{ document.documentElement.removeAttribute('data-theme'); }
     document.documentElement.style.colorScheme = theme;
-    themeToggle?.setAttribute('aria-label', theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+    themeToggle?.setAttribute('aria-label', theme === 'light' ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro');
   }
-  applyTheme(localStorage.getItem(THEME_KEY) === 'dark' ? 'dark' : 'light');
+  applyTheme(localStorage.getItem(THEME_KEY) === 'light' ? 'light' : 'dark');
   themeToggle?.addEventListener('click', () => {
-    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
     localStorage.setItem(THEME_KEY, next);
     applyTheme(next);
   });
