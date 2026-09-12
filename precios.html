@@ -366,7 +366,7 @@
     -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none;
   }
   .svc-grid.has-active .svc-card:not(.active){ opacity:.45; transform:scale(.94); }
-  .svc-card .pkg-name{ margin-bottom:6px; }
+  .svc-card .pkg-name{ margin-bottom:6px; color:var(--ink); font-family:'Spectral',serif; font-weight:600; font-size:19px; letter-spacing:normal; }
   .svc-card .pkg-price{ margin-bottom:4px; }
   .svc-card .pkg-list{ margin:18px 0 20px; flex:1; }
   .svc-hint{
@@ -609,6 +609,8 @@
     <div class="svc-grid" id="svcGrid">
       <button type="button" class="svc-card reveal" data-svc="datos">
         <div class="pkg-name">Análisis de datos</div>
+        <div class="pkg-recur-sub">Valor mensual</div>
+        <div class="pkg-recur">$180.000 <span>COP / mes</span></div>
         <ul class="pkg-list">
           <li>Estructura de base de datos</li>
           <li>Dashboard interactivo</li>
@@ -616,10 +618,13 @@
           <li>3 actualizaciones mensuales incluidas</li>
         </ul>
         <span class="svc-hint">Ver ejemplo ↓</span>
+              <div class="pkg-setup">Pago inicial único: <b>$900.000 COP</b></div>
       </button>
 
       <button type="button" class="svc-card reveal" data-svc="web">
         <div class="pkg-name">Creación de páginas web</div>
+        <div class="pkg-recur-sub">Valor mensual</div>
+        <div class="pkg-recur">$120.000 <span>COP / mes</span></div>
         <ul class="pkg-list">
           <li>Diseño con identidad propia</li>
           <li>Sitio rápido y responsivo</li>
@@ -627,10 +632,13 @@
           <li>3 actualizaciones mensuales incluidas</li>
         </ul>
         <span class="svc-hint">Ver ejemplo ↓</span>
+              <div class="pkg-setup">Pago inicial único: <b>$1.300.000 COP</b></div>
       </button>
 
       <button type="button" class="svc-card reveal" data-svc="auto">
         <div class="pkg-name">Automatización</div>
+        <div class="pkg-recur-sub">Valor mensual</div>
+        <div class="pkg-recur">$120.000 <span>COP / mes</span></div>
         <ul class="pkg-list">
           <li>1 estructura de automatización</li>
           <li>Integración con tus herramientas</li>
@@ -638,10 +646,13 @@
           <li>3 actualizaciones mensuales incluidas</li>
         </ul>
         <span class="svc-hint">Ver ejemplo ↓</span>
+              <div class="pkg-setup">Pago inicial único: <b>$700.000 COP</b></div>
       </button>
 
       <button type="button" class="svc-card reveal" data-svc="agente">
         <div class="pkg-name">Agente personal o empresarial</div>
+        <div class="pkg-recur-sub">Valor mensual</div>
+        <div class="pkg-recur">$250.000 <span>COP / mes</span></div>
         <ul class="pkg-list">
           <li>Agente de IA en WhatsApp o Telegram</li>
           <li>Entrenado con la información de tu negocio</li>
@@ -649,6 +660,7 @@
           <li>3 actualizaciones mensuales incluidas</li>
         </ul>
         <span class="svc-hint">Ver ejemplo ↓</span>
+              <div class="pkg-setup">Pago inicial único: <b>$1.900.000 COP</b></div>
       </button>
     </div>
 
