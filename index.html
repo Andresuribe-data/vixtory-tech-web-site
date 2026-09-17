@@ -87,7 +87,7 @@ h1,h2,h3,h4{ font-family:'Outfit',sans-serif; letter-spacing:-.032em; line-heigh
 h1{ font-size:clamp(2.5rem,6.2vw,5.1rem); font-weight:600; }
 h2{ font-size:clamp(1.75rem,3.3vw,2.85rem); font-weight:600; }
 h3{ font-size:clamp(1.25rem,1.8vw,1.6rem); font-weight:600; letter-spacing:-.02em; }
-p{ max-width:var(--measure); color:var(--ink-soft); }
+p{ max-width:72ch; color:var(--ink-soft); }
 .tone-soft{ color:var(--ink-soft); }
 .mono{ font-family:'Azeret Mono',ui-monospace,monospace; font-variant-numeric:tabular-nums; font-feature-settings:"tnum"; }
 .lead{ font-size:1.06rem; color:var(--ink-soft); max-width:56ch; }
@@ -97,7 +97,7 @@ p{ max-width:var(--measure); color:var(--ink-soft); }
 section{ position:relative; }
 .section-pad{ padding:120px 0 96px; }
 .section-pad + .section-pad{ padding-top:88px; }
-.section-head{ max-width:var(--measure); margin:0 0 56px; }
+.section-head{ max-width:64ch; margin:0 0 56px; }
 .section-head h2{ margin-bottom:18px; }
 .section-head p{ color:var(--ink-soft); }
 
@@ -122,10 +122,9 @@ nav{ display:flex; align-items:center; justify-content:space-between; gap:24px; 
   font-size:13.5px; font-weight:600; padding:11px 20px; border-radius:var(--radius-pill);
   transition:transform .18s var(--ease), filter .18s var(--ease);
 }
-.nav-cta:hover{ transform:translateY(-1px); filter:brightness(1.06); }
 .theme-toggle{
   width:38px; height:38px; display:inline-flex; align-items:center; justify-content:center;
-  background:transparent; color:var(--ink-soft); border:1px solid var(--line); border-radius:var(--radius-pill);
+  color:var(--ink-soft); border:1px solid var(--line); border-radius:var(--radius-pill);
   cursor:pointer; transition:border-color .18s var(--ease), color .18s var(--ease);
 }
 .theme-toggle:hover{ color:var(--ink); border-color:var(--line-strong); }
@@ -152,14 +151,6 @@ nav{ display:flex; align-items:center; justify-content:space-between; gap:24px; 
   cursor:pointer; transition:transform .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease), color .18s var(--ease);
 }
 .btn:hover{ transform:translateY(-2px); }
-.btn-primary{ background:var(--accent); color:var(--accent-ink); }
-.btn-primary:hover{ filter:brightness(1.06); }
-.btn-secondary{ background:transparent; color:var(--ink); border-color:var(--line-strong); }
-.btn-secondary:hover{ border-color:var(--ink); }
-.btn-light{ background:var(--ink); color:var(--bg); }
-.btn-light:hover{ background:var(--accent); color:var(--accent-ink); }
-.btn-outline-dark{ background:transparent; color:var(--ink); border-color:var(--line-strong); }
-.btn-outline-dark:hover{ border-color:var(--ink); }
 .btn[disabled]{ opacity:.5; cursor:not-allowed; transform:none; }
 
 /* ---------- diagrama del héroe (HTML: el texto nunca se encoge) ---------- */
@@ -189,7 +180,7 @@ nav{ display:flex; align-items:center; justify-content:space-between; gap:24px; 
   align-items:baseline; padding:38px 0; border-bottom:1px solid var(--line); }
 .row-title{ font-family:'Outfit',sans-serif; font-size:clamp(1.15rem,1.5vw,1.42rem); font-weight:600;
   letter-spacing:-.02em; line-height:1.25; }
-.row-copy{ font-size:15.5px; line-height:1.65; color:var(--ink-soft); max-width:var(--measure); }
+.row-copy{ font-size:15.5px; line-height:1.65; color:var(--ink-soft); max-width:60ch; }
 .row-tag{ font-size:12.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint);
   white-space:nowrap; text-align:right; }
 .row-icon{ width:20px; height:20px; stroke:var(--accent-text); stroke-width:1.5; fill:none; margin-bottom:12px; }
@@ -235,13 +226,11 @@ footer{ padding:64px 0 44px; background:var(--bg); }
 /* ---------- flotante de WhatsApp ---------- */
 .wa-float{
   position:fixed; bottom:24px; right:24px; z-index:200; display:inline-flex; align-items:center; gap:9px;
-  background:var(--accent); color:var(--accent-ink); font-size:13.5px; font-weight:600;
+  font-size:13.5px; font-weight:600;
   padding:13px 19px; border-radius:var(--radius-pill); box-shadow:var(--shadow-float);
   transition:transform .18s var(--ease), filter .18s var(--ease);
 }
-.wa-float:hover{ transform:translateY(-2px); filter:brightness(1.06); }
 .wa-float .wa-ic{ width:19px; height:19px; }
-.wa-float .wa-ic path{ stroke:var(--accent-ink); }
 
 /* ---------- modal ---------- */
 .modal-overlay{ position:fixed; inset:0; z-index:300; display:none; align-items:center; justify-content:center; padding:20px; background:rgba(6,6,7,.78); backdrop-filter:blur(3px); }
@@ -318,6 +307,69 @@ footer{ padding:64px 0 44px; background:var(--bg); }
 
 /* ---------- medida de lectura: 65–75 caracteres por línea (el `ch` resultaba engañoso) ---------- */
 .hero p, .section-head p, .row-copy, .cta-dark p, .p-step p, .value p, .footer-brand p{ max-width:32em; }
+
+/* ============================================================
+   Cabeceras de sección centradas
+   ============================================================ */
+.section-head{ max-width:58em; margin:0 auto 60px; text-align:center; }
+.section-head h2{ max-width:24em; margin:0 auto 18px; }
+.section-head p{ max-width:34em; margin:0 auto; }
+.cierre{ text-align:center; }
+
+/* ============================================================
+   Botones tipo cristal líquido
+   Vidrio real: fondo translúcido, desenfoque del fondo, filo de 1px
+   especular y sombra con desplazamiento. El texto va claro sobre el
+   vidrio (el ámbar translúcido oscurece el fondo), salvo en tema claro.
+   ============================================================ */
+.btn, .nav-cta, .theme-toggle, .modal-close{
+  position:relative; isolation:isolate; overflow:hidden;
+  background:linear-gradient(180deg, rgba(255,255,255,.21), rgba(255,255,255,.08) 58%, rgba(255,255,255,.13));
+  border:1px solid rgba(255,255,255,.24);
+  color:var(--ink);
+  backdrop-filter:blur(18px) saturate(180%);
+  -webkit-backdrop-filter:blur(18px) saturate(180%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.34), inset 0 -1px 0 rgba(0,0,0,.22);
+}
+/* el flotante conserva su position:fixed; solo hereda el vidrio */
+.wa-float{ isolation:isolate; overflow:hidden; }
+
+/* brillo del vidrio: luz que entra por el borde superior */
+.btn::before, .nav-cta::before, .wa-float::before, .theme-toggle::before{
+  content:''; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background:radial-gradient(125% 95% at 18% -25%, rgba(255,255,255,.40), rgba(255,255,255,0) 60%);
+}
+/* destello que cruza al pasar el cursor */
+.btn::after, .wa-float::after{
+  content:''; position:absolute; top:0; bottom:0; width:46%; left:-60%; pointer-events:none;
+  background:linear-gradient(100deg, rgba(255,255,255,0), rgba(255,255,255,.34), rgba(255,255,255,0));
+  transform:skewX(-14deg); transition:left .55s var(--ease); opacity:0;
+}
+.btn:hover::after, .wa-float:hover::after{ left:120%; opacity:1; }
+.btn:hover, .nav-cta:hover, .wa-float:hover{ transform:translateY(-2px); border-color:rgba(255,255,255,.36); }
+.btn:active, .nav-cta:active, .wa-float:active{ transform:translateY(0); }
+
+/* variante de marca: el mismo vidrio, teñido de ámbar */
+.nav-cta, .btn-primary, .wa-float{
+  background:linear-gradient(180deg, rgba(255,180,108,.46), rgba(255,138,30,.34) 60%, rgba(150,74,12,.58)),
+    rgba(12,10,9,.55);
+  border-color:rgba(255,178,102,.46);
+  color:#fff;
+}
+.btn-primary:hover, .nav-cta:hover{ border-color:rgba(255,196,138,.62); }
+.wa-float .wa-ic path{ stroke:#fff; }
+
+/* tema claro: vidrio claro sobre papel, con la marca en ámbar fuerte y texto oscuro */
+[data-theme="light"] .btn, [data-theme="light"] .theme-toggle, [data-theme="light"] .modal-close{
+  background:linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.52));
+  border-color:rgba(16,16,20,.16); color:var(--ink);
+  box-shadow:0 16px 32px -22px rgba(16,16,20,.5), inset 0 1px 0 rgba(255,255,255,.95);
+}
+[data-theme="light"] .btn-primary, [data-theme="light"] .nav-cta, [data-theme="light"] .wa-float{
+  background:linear-gradient(180deg, rgba(255,150,46,.92), rgba(255,138,30,.66));
+  border-color:rgba(176,94,10,.34); color:#20140a;
+}
+[data-theme="light"] .wa-float .wa-ic path{ stroke:#20140a; }
 
 </style>
 </head>
@@ -551,7 +603,7 @@ footer{ padding:64px 0 44px; background:var(--bg); }
         <span class="row-tag"></span>
       </div>
     </div>
-    <p style="max-width:var(--measure); margin:40px 0 0; padding-top:28px; border-top:1px solid var(--line); color:var(--ink-soft); font-size:16px;" class="reveal">Las empresas que adoptan inteligencia artificial y automatización hoy logran responder más rápido a sus clientes, reducir errores y liberar horas de trabajo manual. En Vixtory Tech te acompañamos de principio a fin: diagnosticamos tus procesos, implementamos con tus sistemas actuales —incluido tu agente de WhatsApp— y medimos los resultados con datos, no con suposiciones. Si tu negocio opera en Colombia y quieres dejar de perder tiempo en tareas repetitivas, podemos empezar con un piloto pequeño y de bajo riesgo que demuestre el retorno antes de escalar.</p>
+    <p class="cierre" style="max-width:var(--measure); margin:40px auto 0; padding-top:28px; border-top:1px solid var(--line); color:var(--ink-soft); font-size:16px;" class="reveal">Las empresas que adoptan inteligencia artificial y automatización hoy logran responder más rápido a sus clientes, reducir errores y liberar horas de trabajo manual. En Vixtory Tech te acompañamos de principio a fin: diagnosticamos tus procesos, implementamos con tus sistemas actuales —incluido tu agente de WhatsApp— y medimos los resultados con datos, no con suposiciones. Si tu negocio opera en Colombia y quieres dejar de perder tiempo en tareas repetitivas, podemos empezar con un piloto pequeño y de bajo riesgo que demuestre el retorno antes de escalar.</p>
     <div style="margin-top:24px;" class="reveal">
       <a href="#contacto" class="btn btn-primary">Hablemos de tu proyecto</a>
     </div>
