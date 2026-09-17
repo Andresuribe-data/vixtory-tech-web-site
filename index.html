@@ -393,8 +393,16 @@ footer{ padding:64px 0 44px; background:var(--bg); }
 .cta-dark .cierre, .cierre{ border-top:0; }
 .section-pad{ padding-top:104px; padding-bottom:104px; }
 
-/* el agente va sobre negro: en tema claro se oculta en lugar de dejar un bloque oscuro */
-[data-theme="light"] .hero::before{ display:none; }
+/* tema claro: el agente va DEBAJO del texto, en papel, para no pisar las letras */
+[data-theme="light"] .hero{ padding-bottom:500px; }
+[data-theme="light"] .hero::before{
+  display:block; top:auto; bottom:0; transform:translateX(-50%);
+  background-image:url(assets/agente-claro.jpg); background-position:center bottom;
+  width:min(820px, 82vw); aspect-ratio:1280 / 802; opacity:.95;
+}
+[data-theme="light"] .hero::after{
+  background:linear-gradient(180deg, var(--bg) 0%, rgba(245,242,234,.92) 30%, rgba(245,242,234,.35) 46%, rgba(245,242,234,0) 58%, rgba(245,242,234,0) 88%, var(--bg) 100%);
+}
 
 </style>
 </head>
