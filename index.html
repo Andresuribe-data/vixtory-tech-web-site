@@ -223,13 +223,6 @@ footer{ padding:64px 0 44px; background:var(--bg); }
 .footer-bottom{ display:flex; justify-content:space-between; align-items:center; gap:16px; padding-top:22px; font-size:13px; color:var(--ink-faint); flex-wrap:wrap; }
 
 /* ---------- flotante de WhatsApp ---------- */
-.wa-float{
-  position:fixed; bottom:24px; right:24px; z-index:200; display:inline-flex; align-items:center; gap:9px;
-  font-size:13.5px; font-weight:600;
-  padding:13px 19px; border-radius:var(--radius-pill); box-shadow:var(--shadow-float);
-  transition:transform .18s var(--ease), filter .18s var(--ease);
-}
-.wa-float .wa-ic{ width:19px; height:19px; }
 
 /* ---------- modal ---------- */
 .modal-overlay{ position:fixed; inset:0; z-index:300; display:none; align-items:center; justify-content:center; padding:20px; background:rgba(6,6,7,.78); backdrop-filter:blur(3px); }
@@ -248,7 +241,7 @@ footer{ padding:64px 0 44px; background:var(--bg); }
 
 /* ---------- un solo momento coreografiado (héroe) ---------- */
 @media (prefers-reduced-motion: no-preference){
-  .hero-grid > *{ animation:enterUp .85s var(--ease) both; }
+  .hero-grid > *:not(.hero-agente){ animation:enterUp .85s var(--ease) both; }
   .hero-grid > *:last-child{ animation-delay:.12s; }
 }
 @keyframes enterUp{ from{ opacity:0; transform:translateY(18px); } to{ opacity:1; transform:none; } }
@@ -281,9 +274,6 @@ footer{ padding:64px 0 44px; background:var(--bg); }
 
 /* ---------- en pantallas pequeñas el flotante se reduce a icono (no tapa contenido) ---------- */
 @media (max-width:560px){
-  .wa-float{ padding:13px; border-radius:var(--radius-pill); }
-  .wa-float .wa-label{ display:none; }
-  .wa-float .wa-ic{ width:22px; height:22px; }
   .flow-t{ font-size:14.5px; }
 }
 
@@ -331,24 +321,10 @@ footer{ padding:64px 0 44px; background:var(--bg); }
   box-shadow:inset 0 1px 0 rgba(255,255,255,.34), inset 0 -1px 0 rgba(0,0,0,.22);
 }
 /* el flotante conserva su position:fixed; solo hereda el vidrio */
-.wa-float{ isolation:isolate; overflow:hidden; }
 
 /* brillo del vidrio: luz que entra por el borde superior */
-.btn::before, .nav-cta::before, .wa-float::before, .theme-toggle::before{
-  content:''; position:absolute; inset:0; z-index:-1; pointer-events:none;
-  background:radial-gradient(125% 95% at 18% -25%, rgba(255,255,255,.40), rgba(255,255,255,0) 60%);
-}
 /* destello que cruza al pasar el cursor */
-.btn::after, .wa-float::after{
-  content:''; position:absolute; top:0; bottom:0; width:46%; left:-60%; pointer-events:none;
-  background:linear-gradient(100deg, rgba(255,255,255,0), rgba(255,255,255,.34), rgba(255,255,255,0));
-  transform:skewX(-14deg); transition:left .55s var(--ease); opacity:0;
-}
-.btn:hover::after, .wa-float:hover::after{ left:120%; opacity:1; }
-.btn:hover, .nav-cta:hover, .wa-float:hover{ transform:translateY(-2px); border-color:rgba(255,255,255,.36); }
-.btn:active, .nav-cta:active, .wa-float:active{ transform:translateY(0); }
 
-.wa-float .wa-ic path{ stroke:#fff; }
 
 /* tema claro: vidrio claro sobre papel, con la marca en ámbar fuerte y texto oscuro */
 [data-theme="light"] .btn, [data-theme="light"] .theme-toggle, [data-theme="light"] .modal-close{
@@ -356,11 +332,6 @@ footer{ padding:64px 0 44px; background:var(--bg); }
   border-color:rgba(16,16,20,.16); color:var(--ink);
   box-shadow:0 16px 32px -22px rgba(16,16,20,.5), inset 0 1px 0 rgba(255,255,255,.95);
 }
-[data-theme="light"] .btn-primary, [data-theme="light"] .nav-cta, [data-theme="light"] .wa-float{
-  background:linear-gradient(180deg, rgba(255,150,46,.92), rgba(255,138,30,.66));
-  border-color:rgba(176,94,10,.34); color:#20140a;
-}
-[data-theme="light"] .wa-float .wa-ic path{ stroke:#20140a; }
 
 /* ---------- bloques de columnas también centrados (valores y proceso) ---------- */
 .value, .p-step{ text-align:center; }
@@ -379,7 +350,6 @@ footer{ padding:64px 0 44px; background:var(--bg); }
 .section-head h2, .cta-dark h2, .hero h1{ text-wrap:balance; }
 
 /* ---------- todos los botones: óvalo y un único vidrio oscuro ---------- */
-.btn, .nav-cta, .wa-float, .theme-toggle, .modal-close{ border-radius:var(--radius-pill); }
 
 /* jerarquía sin cambiar el color: el principal lleva el filo un punto más marcado */
 .btn-primary{ border-color:rgba(255,255,255,.34); }
@@ -394,6 +364,38 @@ footer{ padding:64px 0 44px; background:var(--bg); }
 
 /* ---------- la fila de botones del héroe va centrada en TODA la sección ---------- */
 .hero-actions{ grid-column:1 / -1; justify-content:center; margin-top:6px; }
+
+/* ============================================================
+   Héroe: cuadro fuera, texto centrado y el agente de fondo
+   ============================================================ */
+.hero{ position:relative; overflow:hidden; border-bottom:0; padding:168px 0 92px; isolation:isolate; }
+/* el agente va como fondo del héroe: no afecta el diseño ni depende de un <img> */
+.hero::before{ content:''; position:absolute; left:50%; top:18px; transform:translateX(-50%);
+  width:min(1240px, 106vw); aspect-ratio:1021 / 773; z-index:-2; pointer-events:none; opacity:.92;
+  background-image:url(assets/agente-heroe.jpg); background-repeat:no-repeat;
+  background-position:center top; background-size:100% auto;
+  filter:brightness(.95) contrast(1.04); }
+/* velo suave: solo hunde los bordes del héroe, no tapa el agente */
+.hero::after{ content:''; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background:linear-gradient(180deg, var(--bg) 0%, rgba(11,11,12,0) 18%, rgba(11,11,12,0) 76%, var(--bg) 100%); }
+.hero-grid{ display:block; position:relative; text-align:center; }
+.hero h1{ max-width:20em; margin:0 auto 26px; }
+.hero .lead{ max-width:36em; margin:0 auto 36px; }
+.hero-actions{ justify-content:center; margin-top:0; }
+
+/* ============================================================
+   Menos líneas de separación: la estructura se sostiene con aire
+   ============================================================ */
+.hero, .stats, #proceso, .cta-dark, footer{ border-top:0; border-bottom:0; }
+.rows, .apps-grid, .values, .process-grid{ border-top:0; }
+.row, .footer-top{ border-bottom:0; }
+.value, .p-step{ border-top:0; border-left:0; }
+.stat + .stat::before, .value + .value::before, .p-step + .p-step::before, .app-col + .app-col::before{ display:none; }
+.cta-dark .cierre, .cierre{ border-top:0; }
+.section-pad{ padding-top:104px; padding-bottom:104px; }
+
+/* el agente va sobre negro: en tema claro se oculta en lugar de dejar un bloque oscuro */
+[data-theme="light"] .hero::before{ display:none; }
 
 </style>
 </head>
@@ -432,36 +434,7 @@ footer{ padding:64px 0 44px; background:var(--bg); }
       <h1 class="reveal">Convertimos la operación de tu negocio en una <span class="tone-soft">ventaja medible</span></h1>
       <p class="lead reveal">Diseñamos e implementamos inteligencia artificial, automatización de procesos y sistemas de datos para empresas que quieren dejar de perder tiempo en tareas repetitivas y empezar a decidir con información real.</p>
 </div>
-    <div class="diagram" aria-label="Cómo funciona una implementación de Vixtory Tech">
-        <div class="diagram-head">
-          <span class="diagram-title">Cómo funciona</span>
-          <span class="diagram-title">entrada → decisión → registro</span>
-        </div>
-        <ol class="flow">
-          <li class="flow-node">
-            <span class="flow-t">WhatsApp</span>
-            <span class="flow-s">Entra el mensaje del cliente</span>
-          </li>
-          <li class="flow-node is-accent">
-            <span class="flow-t">Agente de IA</span>
-            <span class="flow-s">Responde, clasifica y decide el siguiente paso</span>
-          </li>
-          <li class="flow-node">
-            <span class="flow-t">CRM de Vixtory</span>
-            <span class="flow-s">Queda el historial y el seguimiento</span>
-          </li>
-          <li class="flow-node">
-            <span class="flow-t">Datos y reportes</span>
-            <span class="flow-s">Se mide qué está pasando, no qué se supone</span>
-          </li>
-        </ol>
-        <div class="diagram-foot">
-          <span>Implementación típica: 2 a 10 días hábiles</span>
-          <span>Operación 24/7</span>
-        </div>
-            
-    </div>
-  <div class="cta-row hero-actions reveal">
+    <div class="cta-row hero-actions reveal">
         <a href="#contacto" class="btn btn-primary">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.07L2 22l5.05-1.32A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2Z" stroke="currentColor" stroke-width="1.5"/></svg>
           Hablar con Vixtory
@@ -628,7 +601,7 @@ footer{ padding:64px 0 44px; background:var(--bg); }
         <span class="row-tag"></span>
       </div>
     </div>
-    <p class="cierre" style="max-width:var(--measure); margin:40px auto 0; padding-top:28px; border-top:1px solid var(--line); color:var(--ink-soft); font-size:16px;" class="reveal">Las empresas que adoptan inteligencia artificial y automatización hoy logran responder más rápido a sus clientes, reducir errores y liberar horas de trabajo manual. En Vixtory Tech te acompañamos de principio a fin: diagnosticamos tus procesos, implementamos con tus sistemas actuales —incluido tu agente de WhatsApp— y medimos los resultados con datos, no con suposiciones. Si tu negocio opera en Colombia y quieres dejar de perder tiempo en tareas repetitivas, podemos empezar con un piloto pequeño y de bajo riesgo que demuestre el retorno antes de escalar.</p>
+    <p class="cierre" style="max-width:var(--measure); margin:40px auto 0; padding-top:0; border-top:0; color:var(--ink-soft); font-size:16px;" class="reveal">Las empresas que adoptan inteligencia artificial y automatización hoy logran responder más rápido a sus clientes, reducir errores y liberar horas de trabajo manual. En Vixtory Tech te acompañamos de principio a fin: diagnosticamos tus procesos, implementamos con tus sistemas actuales —incluido tu agente de WhatsApp— y medimos los resultados con datos, no con suposiciones. Si tu negocio opera en Colombia y quieres dejar de perder tiempo en tareas repetitivas, podemos empezar con un piloto pequeño y de bajo riesgo que demuestre el retorno antes de escalar.</p>
     <div class="reveal" style="margin-top:24px; text-align:center;">
       <a href="#contacto" class="btn btn-primary">Hablemos de tu proyecto</a>
     </div>
@@ -686,10 +659,6 @@ footer{ padding:64px 0 44px; background:var(--bg); }
     </div>
   </div>
 </footer>
-
-<a href="https://wa.me/573142240339?text=Hola%2C%20vengo%20desde%20la%20pagina%20de%20Vixtory%20Tech%20y%20busco%20mas%20informacion%20sobre%20los%20servicios%20que%20brindan" target="_blank" rel="noopener" class="wa-float"><span class="wa-label">Chatea con nosotros</span>
-  <svg class="wa-ic" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.07L2 22l5.05-1.32A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2Z" stroke="currentColor" stroke-width="1.5"/></svg>
-</a>
 
 <!-- ============ MODAL CONTACTO POR CORREO ============ -->
 <div class="modal-overlay" id="emailModal">
