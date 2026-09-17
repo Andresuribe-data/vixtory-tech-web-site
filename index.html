@@ -193,7 +193,6 @@ nav{ display:flex; align-items:center; justify-content:space-between; gap:24px; 
 .process-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; border-top:1px solid var(--line); }
 .p-step{ position:relative; padding:32px 30px 34px; }
 .p-step + .p-step::before{ content:''; position:absolute; left:0; top:14%; bottom:14%; width:1px; background:var(--line); }
-.p-step .idx{ font-family:'Azeret Mono',monospace; font-size:13px; color:var(--accent-text); letter-spacing:.08em; margin-bottom:16px; display:block; }
 .p-step h3{ margin-bottom:10px; }
 .p-step p{ font-size:15.5px; color:var(--ink-soft); }
 
@@ -370,6 +369,11 @@ footer{ padding:64px 0 44px; background:var(--bg); }
   border-color:rgba(176,94,10,.34); color:#20140a;
 }
 [data-theme="light"] .wa-float .wa-ic path{ stroke:#20140a; }
+
+/* ---------- bloques de columnas también centrados (valores y proceso) ---------- */
+.value, .p-step{ text-align:center; }
+.value p, .p-step p{ margin:0 auto; }
+.value h3, .p-step h3{ text-align:center; }
 
 </style>
 </head>
