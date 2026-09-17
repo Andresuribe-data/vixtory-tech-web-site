@@ -295,6 +295,23 @@ footer{ padding:64px 0 44px; background:var(--bg); }
   .flow-t{ font-size:14.5px; }
 }
 
+/* ---------- aplicaciones: tres columnas centradas, sin botón; toda la columna es el enlace ---------- */
+.apps-grid{ display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--line); }
+.app-col{ position:relative; display:grid; justify-items:center; text-align:center; gap:15px;
+  padding:52px 34px 50px; border-radius:var(--radius); transition:background .25s var(--ease); }
+.app-col + .app-col::before{ content:''; position:absolute; left:0; top:54px; bottom:52px; width:1px; background:var(--line); }
+.app-col:hover{ background:var(--surface); }
+.app-col:focus-visible{ outline:2px solid var(--accent); outline-offset:-2px; }
+.app-ico{ width:25px; height:25px; color:var(--accent); }
+.app-name{ margin:0; font-size:1.34rem; letter-spacing:-0.018em; }
+.app-copy{ margin:0; max-width:34ch; font-size:15px; line-height:1.65; color:var(--ink-soft); }
+.app-col:hover .app-name{ text-decoration:underline; text-underline-offset:.2em; text-decoration-thickness:1px; }
+@media (max-width:900px){
+  .apps-grid{ grid-template-columns:1fr; }
+  .app-col{ padding:40px 8px; }
+  .app-col + .app-col::before{ left:14%; right:14%; top:0; bottom:auto; width:auto; height:1px; }
+}
+
 </style>
 </head>
 <body>
@@ -434,44 +451,34 @@ footer{ padding:64px 0 44px; background:var(--bg); }
       <h2>Herramientas creadas para potenciar tu operación</h2>
       <p>Construimos aplicaciones web ligeras sobre nuestra propia metodología. Vixtory Maps para estructurar ideas y Vixtory Tasks para ejecutarlas: productividad, pensamiento crítico y estrategia en una sola plataforma.</p>
     </div>
-    <div class="services-wrap">
-      <div class="rows">
-      <a class="row app-row" href="https://agent.vixtory.tech" target="_blank" rel="noopener" aria-label="Marvix">
-        <div>
-          <svg class="row-icon" width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <div class="apps-grid">
+      <a class="app-col" href="https://agent.vixtory.tech" target="_blank" rel="noopener">
+        <svg class="app-ico" width="25" height="25" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/>
               <path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15z"/>
             </svg>
-          <div class="row-title">Marvix</div>
-        </div>
-        <div class="row-copy">Tu agente de negocio con inteligencia artificial: atiende WhatsApp, gestiona clientes y automatiza respuestas desde un solo lugar.</div>
-        <span class="row-link">Abrir →</span>
+        <h3 class="app-name">Marvix</h3>
+        <p class="app-copy">Tu agente de negocio con inteligencia artificial: atiende WhatsApp, gestiona clientes y automatiza respuestas desde un solo lugar.</p>
       </a>
-      <a class="row app-row" href="vixtory-maps.html" aria-label="Vixtory Maps">
-        <div>
-          <svg class="row-icon" width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <a class="app-col" href="vixtory-maps.html">
+        <svg class="app-ico" width="25" height="25" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="5" r="2.2"/>
               <circle cx="5" cy="18" r="2.2"/>
               <circle cx="19" cy="18" r="2.2"/>
               <path d="M10.9 6.6 6.1 16M13.1 6.6 17.9 16M7.2 18h9.6"/>
             </svg>
-          <div class="row-title">Vixtory Maps</div>
-        </div>
-        <div class="row-copy">Organiza ideas, conecta conceptos y planifica estrategias con nodos, prioridades y etiquetas. Gratis, sin registro y directo desde tu navegador.</div>
-        <span class="row-link">Abrir →</span>
+        <h3 class="app-name">Vixtory Maps</h3>
+        <p class="app-copy">Organiza ideas, conecta conceptos y planifica estrategias con nodos, prioridades y etiquetas. Gratis, sin registro y directo desde tu navegador.</p>
       </a>
-      <a class="row app-row" href="vixtory-tasks-landing.html" aria-label="Vixtory Tasks">
-        <div>
-          <svg class="row-icon" width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <a class="app-col" href="vixtory-tasks-landing.html">
+        <svg class="app-ico" width="25" height="25" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
             </svg>
-          <div class="row-title">Vixtory Tasks</div>
-        </div>
-        <div class="row-copy">Gestiona tus tareas con tablero Kanban, calendario, cronómetros y exportación a Excel y CSV. Todo en tu navegador, con guardado automático.</div>
-        <span class="row-link">Abrir →</span>
+        <h3 class="app-name">Vixtory Tasks</h3>
+        <p class="app-copy">Gestiona tus tareas con tablero Kanban, calendario, cronómetros y exportación a Excel y CSV. Todo en tu navegador, con guardado automático.</p>
       </a>
     </div>
-    </div>
+  </div>
   </div>
 </section>
 
