@@ -15,22 +15,22 @@
     --bg:#F2F0E6; --bg-alt:#EAE7DB; --surface:#FFFFFF;
     --ink:#161F38; --ink-soft:#565F7D; --ink-faint:#8890A8;
     --line:rgba(22,31,56,.12); --line-strong:rgba(22,31,56,.22);
-    --blue:#4F6FEF; --violet:#8B5CF6; --accent:#4F6FEF; --accent-soft:#8B5CF6;
-    --grad:linear-gradient(135deg,#4F6FEF 0%,#8B5CF6 100%);
+    --blue:#101014; --violet:#8A4A00; --accent:#B35A00; --accent-soft:#8A4A00;
+    --grad:none;
     --dark:#0E1428; --dark-ink:#F2F0E6; --dark-muted:#A3A9CC;
     --dark-line:rgba(255,255,255,.10);
     --radius:16px; --radius-sm:12px;
     --ease:cubic-bezier(.16,.84,.44,1);
-    --shadow-card:0 24px 44px -28px rgba(22,31,56,.28);
-    --shadow-lift:0 26px 52px -24px rgba(22,31,56,.32);
+    --shadow-card:0 10px 20px -16px rgba(0,0,0,.35);
+    --shadow-lift:0 10px 20px -14px rgba(0,0,0,.4);
   }
   /* Tema oscuro: NEGRO puro (no azul) */
   [data-theme="dark"]{
     --bg:#000000; --bg-alt:#0C0C0C; --surface:#121212;
     --ink:#F5F3EC; --ink-soft:#B4B7C4; --ink-faint:#83879A;
     --line:rgba(255,255,255,.12); --line-strong:rgba(255,255,255,.2);
-    --shadow-card:0 24px 44px -28px rgba(0,0,0,.8);
-    --shadow-lift:0 26px 52px -24px rgba(0,0,0,.85);
+    --shadow-card:0 10px 20px -16px rgba(0,0,0,.8);
+    --shadow-lift:0 10px 20px -14px rgba(0,0,0,.85);
   }
   [data-theme="dark"] header.scrolled{ background:rgba(0,0,0,.85); }
   [data-theme="dark"] .cta-dark{ background:#0A0A0A; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
@@ -54,7 +54,6 @@
     background:var(--bg); color:var(--ink);
     font-family:'Outfit',sans-serif;
     -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
   }
   img{ max-width:100%; display:block; }
   a{ color:inherit; text-decoration:none; }
@@ -62,7 +61,7 @@
   h1,h2,h3,h4{ font-family:'Spectral',serif; letter-spacing:-.005em; }
   .eyebrow{
     font-family:'Azeret Mono',monospace; font-size:11.5px; letter-spacing:.14em;
-    text-transform:uppercase; color:var(--accent-soft);
+    text-transform:uppercase; color:var(--accent-text);
     display:flex; align-items:center; gap:10px; justify-content:center;
   }
   .eyebrow::before{ content:''; width:16px; height:1px; background:var(--accent-soft); }
@@ -89,7 +88,7 @@
   /* ---------- NAV ---------- */
   header{
     position:fixed; top:0; left:0; right:0; z-index:100;
-    transition:background .3s, border-color .3s, padding .3s;
+    transition:background .3s, border-color .3s;
     border-bottom:1px solid transparent; padding:22px 0;
   }
   header.scrolled{
@@ -107,12 +106,12 @@
   .nav-links a:hover{ color:var(--ink); }
   .nav-cta{
     display:inline-flex; align-items:center; gap:8px;
-    background:var(--accent); color:#fff; font-size:13px; font-weight:600;
+    background:#FF8A1E; color:#101014; font-size:13px; font-weight:600;
     padding:11px 20px; border-radius:30px;
     transition:transform .25s, box-shadow .25s;
   }
-  .nav-cta:hover{ transform:translateY(-2px); box-shadow:0 10px 24px -10px rgba(79,111,239,.55); }
-  .dot-live{ width:7px; height:7px; border-radius:50%; background:#3ECF8E; box-shadow:0 0 0 3px rgba(62,207,142,.25); animation:pulse 2s infinite; flex-shrink:0; }
+  .nav-cta:hover{ transform:translateY(-2px); box-shadow:0 10px 20px -14px rgba(0,0,0,.5); }
+  .dot-live{ width:7px; height:7px; border-radius:50%; background:#3ECF8E; flex-shrink:0; }
   @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.4; } }
   .menu-btn{ display:none; }
 
@@ -133,8 +132,8 @@
     transition:transform .25s, box-shadow .25s, border-color .25s;
     cursor:pointer; border:none;
   }
-  .btn-primary{ background:var(--accent); color:#fff; box-shadow:0 14px 28px -12px rgba(79,111,239,.5); }
-  .btn-primary:hover{ transform:translateY(-3px); box-shadow:0 18px 34px -12px rgba(139,92,246,.55); }
+  .btn-primary{ background:#FF8A1E; color:#101014; box-shadow:0 10px 20px -14px rgba(0,0,0,.5); }
+  .btn-primary:hover{ transform:translateY(-3px); box-shadow:0 10px 20px -14px rgba(0,0,0,.5); }
   .btn-secondary{ background:transparent; color:var(--ink); border:1px solid var(--line-strong); }
   .btn-secondary:hover{ border-color:var(--ink); transform:translateY(-3px); }
 
@@ -142,7 +141,7 @@
   .hero-visual svg{ position:absolute; inset:0; width:100%; height:100%; }
   .hero-visual .mark{
     position:relative; width:62%; z-index:2;
-    filter:drop-shadow(0 30px 50px rgba(22,31,56,.18));
+    filter:drop-shadow(0 10px 20px rgba(0,0,0,.18));
     animation:float 6s ease-in-out infinite;
   }
   @keyframes float{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-14px); } }
@@ -186,7 +185,7 @@
     padding:32px 26px;
     transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s;
   }
-  .card:hover{ transform:translateY(-6px); box-shadow:var(--shadow-lift); border-color:rgba(139,92,246,.35); }
+  .card:hover{ transform:translateY(-6px); box-shadow:var(--shadow-lift); border-color:var(--line-strong); }
   .icon-badge{
     width:46px; height:46px; border-radius:12px;
     display:flex; align-items:center; justify-content:center;
@@ -195,15 +194,15 @@
   .icon-badge svg{ width:22px; height:22px; }
   .card h3{ font-size:16.5px; font-weight:600; margin-bottom:10px; }
   .card p{ font-size:13.5px; color:var(--ink-soft); line-height:1.6; }
-  .card .tag{ font-family:'Azeret Mono',monospace; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin-top:14px; display:block; }
+  .card .tag{ font-family:'Azeret Mono',monospace; font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent-text); margin-top:14px; display:block; }
 
   /* ---------- APP CARD (Aplicaciones) ---------- */
   .app-card{ display:flex; align-items:center; gap:22px; text-align:left; grid-column:1/-1; }
-  .app-card .icon-badge{ flex-shrink:0; margin-bottom:0; width:56px; height:56px; background:var(--accent); border:none; }
-  .app-card .icon-badge svg{ width:26px; height:26px; stroke:#fff; }
+  .app-card .icon-badge{ flex-shrink:0; margin-bottom:0; width:56px; height:56px; background:#FF8A1E; border:none; }
+  .app-card .icon-badge svg{ width:26px; height:26px; stroke:#101014; }
   .app-card h3{ margin-bottom:8px; }
   .app-card .app-body{ flex:1; }
-  .app-card .tag{ margin-top:0; white-space:nowrap; color:var(--accent); }
+  .app-card .tag{ margin-top:0; white-space:nowrap; color:var(--accent-text); }
   @media (max-width:560px){
     .app-card{ flex-wrap:wrap; gap:16px; }
     .app-card .tag{ white-space:normal; }
@@ -218,11 +217,11 @@
   }
   .p-step{ padding:0 24px; position:relative; }
   .p-step .idx{
-    font-family:'Azeret Mono',monospace; font-size:13px; color:#fff;
-    background:var(--accent); width:44px; height:44px; border-radius:50%;
+    font-family:'Azeret Mono',monospace; font-size:13px; color:#101014;
+    background:#FF8A1E; width:44px; height:44px; border-radius:50%;
     display:flex; align-items:center; justify-content:center;
     margin-bottom:20px; position:relative; z-index:1;
-    box-shadow:0 10px 20px -10px rgba(79,111,239,.5);
+    box-shadow:0 10px 20px -14px rgba(0,0,0,.5);
   }
   .p-step h3{ font-size:16.5px; font-weight:600; margin-bottom:10px; }
   .p-step p{ font-size:13.5px; color:var(--ink-soft); line-height:1.6; }
@@ -238,8 +237,7 @@
   .cta-dark::before{
     content:''; position:absolute; inset:0;
     background:
-      radial-gradient(circle at 15% 20%, rgba(79,111,239,.28), transparent 45%),
-      radial-gradient(circle at 85% 80%, rgba(139,92,246,.24), transparent 45%);
+      none;
     pointer-events:none;
   }
   .cta-inner{ position:relative; z-index:1; max-width:780px; margin:0 auto; }
@@ -248,7 +246,7 @@
   .cta-dark p{ color:var(--dark-muted); font-size:14.5px; line-height:1.65; max-width:560px; margin:0 auto 30px; }
   .cta-actions{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
   .btn-light{ background:#fff; color:var(--dark); }
-  .btn-light:hover{ transform:translateY(-3px); box-shadow:0 18px 36px -12px rgba(0,0,0,.5); }
+  .btn-light:hover{ transform:translateY(-3px); box-shadow:0 10px 20px -14px rgba(0,0,0,.5); }
   .btn-outline-dark{ border:1px solid var(--dark-line); color:#fff; }
   .btn-outline-dark:hover{ border-color:rgba(255,255,255,.5); transform:translateY(-3px); }
   .wa-note{ font-family:'Azeret Mono',monospace; font-size:11px; color:var(--dark-muted); margin-top:8px; }
@@ -269,7 +267,7 @@
     position:fixed; bottom:24px; right:24px; z-index:200;
     display:flex; align-items:center; gap:9px;
     background:var(--ink); color:#fff; padding:13px 18px; border-radius:40px;
-    box-shadow:0 14px 28px -10px rgba(22,31,56,.5);
+    box-shadow:0 10px 20px -14px rgba(0,0,0,.5);
     transition:transform .25s; font-size:13px; font-weight:600;
   }
   .wa-float:hover{ transform:translateY(-3px); }
@@ -285,7 +283,7 @@
   .modal-overlay.open{ display:flex; }
   .modal-box{
     background:#fff; border-radius:18px; padding:36px; max-width:440px; width:100%;
-    position:relative; box-shadow:0 30px 60px -12px rgba(14,20,40,.35);
+    position:relative; box-shadow:0 10px 20px -14px rgba(0,0,0,.5);
     animation:modalIn .25s var(--ease);
   }
   @keyframes modalIn{ from{ opacity:0; transform:translateY(12px) scale(.98); } to{ opacity:1; transform:translateY(0) scale(1); } }
@@ -320,8 +318,8 @@
   }
 
   /* ================= vixtory-tasks-landing.html — reglas específicas ================= */
-  :root{ --success:#3ECF8E; --warn:#FFB020; --danger:#FF5C7A; --shadow:0 20px 44px -20px rgba(22,31,56,.2); }
-  [data-theme="dark"]{ --success:#58F0BA; --warn:#FFC44D; --danger:#FF7A94; --shadow:0 20px 44px -20px rgba(0,0,0,.65); }
+  :root{ --success:#3ECF8E; --warn:#FFB020; --danger:#FF5C7A; --shadow:0 10px 20px -16px rgba(0,0,0,.3); }
+  [data-theme="dark"]{ --success:#58F0BA; --warn:#FFC44D; --danger:#FF7A94; --shadow:0 10px 20px -16px rgba(0,0,0,.65); }
 
   /* Header sticky translúcido de esta página */
   header{ position:sticky; top:0; z-index:100; background:rgba(242,240,230,.88); backdrop-filter:blur(14px) saturate(160%); -webkit-backdrop-filter:blur(14px) saturate(160%); border-bottom:1px solid var(--line); }
@@ -380,7 +378,7 @@
     background:var(--surface); border:1px solid var(--line); border-radius:9px;
     padding:8px 10px; font-size:11.5px; font-weight:600; color:var(--ink-soft);
   }
-  .demo-pill.timer{ border-left:3px solid var(--success); animation:pulse 2s ease-in-out infinite; }
+  .demo-pill.timer{ animation:none; }
   .demo-pill.done{ text-decoration:line-through; opacity:.55; }
   .demo-pill.add{ border-style:dashed; color:var(--ink-faint); display:flex; align-items:center; justify-content:center; background:transparent; }
   @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.55; } }
@@ -398,7 +396,7 @@
     background:var(--surface); border:1px solid var(--line); border-radius:16px;
     padding:30px 26px; transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s;
   }
-  .feat-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow); border-color:rgba(139,92,246,.35); }
+  .feat-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow); border-color:var(--line-strong); }
   .feat-card h3{ font-size:16.5px; font-weight:600; margin-bottom:10px; }
   .feat-card p{ font-size:13.5px; color:var(--ink-soft); line-height:1.65; }
 
@@ -406,7 +404,7 @@
   .ben-item{ display:flex; gap:14px; align-items:flex-start; }
   .ben-check{
     width:26px; height:26px; border-radius:8px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
-    background:var(--accent); color:#fff;
+    background:#FF8A1E; color:#101014;
   }
   .ben-check svg{ width:14px; height:14px; }
   .ben-item h3{ font-size:15.5px; font-weight:600; margin-bottom:5px; }
@@ -414,13 +412,12 @@
 
   .cta-card{
     background:var(--dark); color:var(--dark-ink); border-radius:22px; position:relative; overflow:hidden;
-    padding:64px 48px; text-align:center; box-shadow:0 30px 70px -24px rgba(14,20,40,.5);
+    padding:64px 48px; text-align:center; box-shadow:0 10px 20px -14px rgba(0,0,0,.5);
   }
   .cta-card::before{
     content:''; position:absolute; inset:0;
     background:
-      radial-gradient(circle at 20% 20%, rgba(79,111,239,.35), transparent 45%),
-      radial-gradient(circle at 80% 80%, rgba(139,92,246,.3), transparent 45%);
+      none;
     pointer-events:none;
   }
   .cta-card h2{ font-size:clamp(1.8rem,3vw,2.4rem); font-weight:500; margin:16px 0 12px; position:relative; }
@@ -450,7 +447,7 @@
     .nav-links{
       display:none; position:absolute; top:100%; left:0; right:0; background:var(--surface);
       border-bottom:1px solid var(--line); flex-direction:column; align-items:stretch; gap:0; padding:14px 24px 22px;
-      box-shadow:0 20px 30px -20px rgba(22,31,56,.25);
+      box-shadow:0 10px 20px -14px rgba(16,16,20,.35);
     }
     .nav-links.mobile-open{ display:flex; }
     .nav-links a{ padding:12px 0; border-bottom:1px solid var(--line); }
@@ -465,6 +462,199 @@
     .wrap{ padding:0 20px; }
   }
 
+</style>
+<style id="v2-skin">
+/* ============================================================
+   PIEL v2 — mismo lenguaje visual que index.html
+   Papel cálido, tinta casi negra, un solo acento ámbar, filetes de 1px
+   y botones de vidrio ovalados. Sobreescribe el CSS antiguo de arriba
+   (que se conserva tal cual): este bloque va después y gana la cascada.
+   ============================================================ */
+
+/* ---------- 1. tokens ---------- */
+:root{
+  --measure:32em;
+  --bg:#F4F3F0; --bg-alt:#EAE9E4; --surface:#FFFFFF; --surface-2:#F6F5F2;
+  --ink:#101014; --ink-soft:#4A4F59; --ink-faint:#616775;
+  --line:rgba(16,16,20,.14); --line-strong:rgba(16,16,20,.30);
+  --blue:#101014; --violet:#8A4A00;
+  --accent:#B35A00; --accent-soft:#8A4A00; --accent-text:#8A4A00; --accent-ink:#0B0B0C;
+  --grad:none;
+  --dark:#0B0B0C; --dark-ink:#F2EFE9; --dark-muted:#C3C7D0; --dark-line:rgba(255,255,255,.14);
+  --radius:3px; --radius-sm:3px; --radius-pill:999px;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --shadow:0 10px 20px -14px rgba(16,16,20,.35);
+  --shadow-card:0 10px 20px -16px rgba(16,16,20,.30);
+  --shadow-lift:0 10px 20px -14px rgba(16,16,20,.40);
+  --shadow-soft:0 10px 20px -16px rgba(16,16,20,.35);
+  --success:#1F7D4D; --warn:#8A5A00; --danger:#A3261E;
+}
+[data-theme="dark"]{
+  --bg:#0B0B0C; --bg-alt:#0F0F11; --surface:#131316; --surface-2:#17171B;
+  --ink:#F2EFE9; --ink-soft:#C3C7D0; --ink-faint:#9AA0AB;
+  --line:rgba(255,255,255,.12); --line-strong:rgba(255,255,255,.26);
+  --blue:#F2EFE9; --violet:#FFA24D;
+  --accent:#FFA24D; --accent-soft:#FFA24D; --accent-text:#FFA24D;
+  --grad:none;
+  --dark:#0B0B0C; --dark-ink:#F2EFE9; --dark-muted:#C3C7D0;
+  --shadow:0 10px 20px -14px rgba(0,0,0,.90);
+  --shadow-card:0 10px 20px -16px rgba(0,0,0,.85);
+  --shadow-lift:0 10px 20px -14px rgba(0,0,0,.90);
+  --shadow-soft:0 10px 20px -16px rgba(0,0,0,.90);
+  --success:#3ECF8E; --warn:#FFC44D; --danger:#FF7A94;
+}
+
+/* ---------- 2. superficies del navegador ---------- */
+::selection{ background:#FF8A1E; color:#101014; }
+html{ caret-color:#FF8A1E; scrollbar-color:#FF8A1E var(--bg-alt); scrollbar-width:thin; }
+*::-webkit-scrollbar{ width:10px; height:10px; }
+*::-webkit-scrollbar-track{ background:var(--bg-alt); }
+*::-webkit-scrollbar-thumb{ background:#FF8A1E; border:2px solid var(--bg-alt); border-radius:999px; }
+*::-webkit-scrollbar-thumb:hover{ background:#B35A00; }
+:focus-visible{ outline:2px solid #FF8A1E; outline-offset:3px; border-radius:2px; }
+a{ text-underline-offset:.18em; }
+.nav-links a:hover, .foot-col a:hover, .foot-brand a:hover{
+  color:var(--ink); text-decoration:underline; text-decoration-color:#FF8A1E; text-decoration-thickness:1px;
+}
+
+/* ---------- 3. tipografía ---------- */
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:'Outfit',system-ui,sans-serif; font-size:16.5px; line-height:1.7;
+}
+h1,h2,h3,h4{ font-family:'Outfit',sans-serif; letter-spacing:-.032em; line-height:1.06; }
+h1{ font-size:clamp(2.05rem,4.4vw,3.2rem); font-weight:600; }
+h2{ font-size:clamp(1.7rem,3.1vw,2.55rem); font-weight:600; letter-spacing:-.026em; }
+h3{ font-size:clamp(1.12rem,1.5vw,1.32rem); font-weight:600; letter-spacing:-.02em; }
+/* ninguna regla antigua vuelve a colar la serif ni la mono decorativa */
+.hero h1, .section-head h2, .cta-card h2, .cta-dark h2, .card h3, .feat-card h3,
+.ben-item h3, .p-step h3, .foot-col h5, .foot-col h3, .footer-col h4, .stat .num{
+  font-family:'Outfit',sans-serif; letter-spacing:-.026em;
+}
+.hero h1{ font-weight:600; }
+.card .tag, .app-card .tag, .demo-title, .demo-col-head, .footer-col h4, .foot-col h5, .foot-col h3{
+  font-family:'Outfit',sans-serif;
+}
+.stat .num{ font-family:'Azeret Mono',monospace; font-weight:500; letter-spacing:-.02em; }
+p, li, .lead{ text-transform:none; }
+.hero p, .hero p.lead, .section-head p, .card p, .feat-card p, .ben-item p,
+.cta-card p, .foot-brand p, .p-step p, .demo-card p{ max-width:32em; }
+.hero p.lead{ font-size:1.06rem; line-height:1.7; color:var(--ink-soft); margin-bottom:32px; }
+
+/* ---------- 4. fuera kickers y fuera degradado de texto ---------- */
+.eyebrow{ display:none; }
+.grad-text{
+  background:none; -webkit-background-clip:border-box; background-clip:border-box;
+  -webkit-text-fill-color:currentColor; color:var(--ink);
+}
+
+/* ---------- 5. botones: vidrio ovalado ---------- */
+.btn, .nav-cta, .theme-btn, .menu-btn, .modal-close, .wa-float{
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:15px 26px; border-radius:999px;
+  background:linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.52));
+  border:1px solid rgba(16,16,20,.16); color:var(--ink);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95);
+  backdrop-filter:blur(18px) saturate(180%); -webkit-backdrop-filter:blur(18px) saturate(180%);
+  font-family:'Outfit',sans-serif; font-size:14px; font-weight:600; cursor:pointer;
+  transition:transform .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease);
+}
+.btn:hover, .theme-btn:hover, .menu-btn:hover, .modal-close:hover{ transform:translateY(-2px); border-color:rgba(16,16,20,.30); }
+.btn-primary, .nav-cta, .wa-float{
+  background:linear-gradient(180deg, rgba(255,150,46,.92), rgba(255,138,30,.66));
+  border-color:rgba(176,94,10,.34); color:#20140A;
+}
+.btn-primary:hover, .nav-cta:hover, .wa-float:hover{ transform:translateY(-2px); box-shadow:0 10px 20px -14px rgba(0,0,0,.5); }
+.btn-primary svg, .nav-cta svg, .wa-float .wa-ic path{ stroke:#20140A; }
+.theme-btn{ width:40px; height:40px; padding:0; }
+.menu-btn{ width:44px; height:44px; padding:0; }
+.menu-btn .bar{ background:var(--ink); }
+.modal-close{ width:34px; height:34px; padding:0; font-size:19px; }
+[data-theme="dark"] .btn, [data-theme="dark"] .theme-btn, [data-theme="dark"] .menu-btn, [data-theme="dark"] .modal-close{
+  background:linear-gradient(180deg, rgba(255,255,255,.21), rgba(255,255,255,.08) 58%, rgba(255,255,255,.13));
+  border-color:rgba(255,255,255,.24); color:var(--ink);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.34), inset 0 -1px 0 rgba(0,0,0,.22);
+}
+[data-theme="dark"] .btn-primary, [data-theme="dark"] .nav-cta, [data-theme="dark"] .wa-float{
+  background:linear-gradient(180deg, rgba(255,150,46,.92), rgba(255,138,30,.66));
+  border-color:rgba(176,94,10,.34); color:#20140A;
+}
+[data-theme="dark"] .btn-primary svg, [data-theme="dark"] .nav-cta svg,
+[data-theme="dark"] .btn-primary svg path, [data-theme="dark"] .nav-cta svg path{ stroke:#20140A; }
+[data-theme="dark"] .wa-float .wa-ic path{ stroke:#20140A; }
+
+/* ---------- 6. menos líneas de separación ---------- */
+.hero, .stats, #proceso, #servicios, .section-pad, .section-head,
+.bg-alt-section, .cta-card, .demo-wrap, .cta-dark, footer{ border-top:0; border-bottom:0; }
+.section-pad{ padding:104px 0; }
+.section-pad + .section-pad{ padding-top:104px; }
+.section-head{ max-width:58em; margin:0 auto 56px; text-align:center; }
+.section-head h2{ max-width:26em; margin:0 auto; }
+.section-head p{ max-width:34em; margin:0 auto; }
+header{ border-bottom:1px solid transparent; transition:background .25s var(--ease), border-color .25s var(--ease); padding:20px 0; }
+header.scrolled{ border-bottom-color:var(--line); padding:14px 0; }
+
+/* ---------- 7. tarjetas: radius 3px, un filete, sombra neutra con desplazamiento ---------- */
+.card, .feat-card, .demo-card, .demo-col, .demo-pill, .cta-card, .modal-box,
+.ben-check, .icon-badge, .theme-btn, .menu-btn, .form-field input, .form-field textarea{ border-radius:3px; }
+.feat-card{ padding:30px 28px; box-shadow:none; transition:border-color .18s var(--ease), transform .18s var(--ease); }
+.feat-card:hover{ transform:translateY(-2px); box-shadow:0 10px 20px -16px rgba(16,16,20,.35); border-color:var(--line-strong); }
+[data-theme="dark"] .feat-card:hover{ box-shadow:0 10px 20px -16px rgba(0,0,0,.85); }
+.demo-card{ border-color:var(--line); box-shadow:0 10px 20px -16px rgba(16,16,20,.30); }
+[data-theme="dark"] .demo-card{ box-shadow:0 10px 20px -16px rgba(0,0,0,.90); }
+.demo-top{ border-bottom:0; padding:14px 18px; }
+.demo-kanban{ background:var(--bg-alt); border-top:1px solid var(--line); padding:16px; }
+.demo-col{ border-color:var(--line); }
+.demo-pill{ border-radius:3px; font-size:12.5px; color:var(--ink-soft); }
+.demo-pill.timer{ border-left:0; border-radius:3px; background:var(--bg-alt); color:var(--ink-soft); animation:none; }
+.demo-pill.done{ opacity:1; color:var(--ink-faint); }
+.demo-pill.add{ color:var(--ink-faint); }
+.demo-col-head{ font-size:12.5px; color:var(--ink-faint); }
+.demo-title{ font-size:12.5px; color:var(--ink-faint); }
+.stat .lbl, .card .tag{ font-size:12.5px; }
+.foot-col h5, .foot-col h3{ font-family:'Outfit',sans-serif; font-size:12.5px; font-weight:600;
+  letter-spacing:.07em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:16px; }
+.footer-col h4{ font-size:12.5px; }
+.wa-note{ font-size:12.5px; color:var(--ink-faint); }
+.footer-bottom, .foot-bottom{ font-size:13px; color:var(--ink-faint); }
+.form-field label{ font-size:13.5px; color:var(--ink); }
+.form-field input, .form-field textarea{ font-size:15px; }
+.modal-box{ border:1px solid var(--line); box-shadow:0 10px 20px -16px rgba(16,16,20,.35); }
+.modal-overlay{ background:rgba(6,6,7,.78); }
+.form-field input:focus, .form-field textarea:focus{ border-color:#B35A00; }
+.form-field input::placeholder, .form-field textarea::placeholder{ color:var(--ink-faint); }
+
+/* ---------- 8. fichas de icono → icono en línea, sin caja ---------- */
+.feat-card .icon-badge{
+  display:block; width:auto; height:auto; padding:0; margin:0 0 14px;
+  background:none; border:0; border-radius:0; box-shadow:none;
+}
+.feat-card .icon-badge svg{ display:block; width:22px; height:22px; stroke:var(--accent-text); stroke-width:1.5; }
+.ben-check{ width:24px; height:24px; background:#FF8A1E; color:#101014; }
+.ben-check svg{ width:14px; height:14px; stroke:#101014; }
+
+/* ---------- 9. resto de bloques ---------- */
+.hero{ padding:150px 0 100px; }
+.hero-grid{ gap:56px; }
+.hero-proof span{ color:var(--ink-soft); }
+.hero-proof svg{ color:var(--success); }
+.cta-card{ background:var(--dark); color:var(--dark-ink); padding:64px 48px; box-shadow:0 10px 20px -14px rgba(0,0,0,.5); }
+.cta-card::before{ display:none; }
+.cta-card .eyebrow{ color:#FFA24D; }
+[data-theme="dark"] .cta-card{ background:var(--bg-alt); }   /* la banda no desaparece en modo oscuro */
+/* sobre la banda oscura el ámbar translúcido se apaga: se refuerza para que el texto oscuro siga en AA (>4.5:1) */
+.cta-card .btn-primary{ background:linear-gradient(180deg, rgba(255,150,46,.98), rgba(255,138,30,.86)); }
+.cta-card p{ color:var(--dark-muted); }
+.cta-card h2{ color:var(--dark-ink); }
+.footer-top{ border-bottom:1px solid var(--line); }
+.foot-bottom{ border-top:0; }
+.reveal, .reveal.on, .reveal.in{ opacity:1; transform:none; }   /* el JS añade .on; aquí es inerte, como en index.html */
+header{ background:rgba(245,242,234,.88); backdrop-filter:blur(12px) saturate(160%); -webkit-backdrop-filter:blur(12px) saturate(160%); }
+[data-theme="dark"] header{ background:rgba(11,11,12,.86); }
+[data-theme="dark"] .brand-logo, [data-theme="dark"] .foot-brand img{ filter:brightness(0) invert(1); }
+[data-theme="dark"] .modal-box{ background:var(--surface); }
+[data-theme="dark"] .modal-overlay{ background:rgba(6,6,7,.78); }
+[data-theme="dark"] .demo-pill.done, [data-theme="dark"] .demo-pill.add{ color:var(--ink-faint); }
 </style>
 </head>
 <body>
@@ -501,7 +691,6 @@
   <div class="wrap">
     <div class="hero-grid">
       <div>
-        <span class="eyebrow">Vixtory Tasks · Herramienta oficial de Vixtory Tech</span>
         <h1>Convierte tu día en un <span class="grad-text">plan claro y ejecutable</span></h1>
         <p class="lead">Gestiona tus tareas con tablero Kanban, calendario, cronómetros y exportación a Excel y CSV. Rápido, visual y 100% en tu navegador — con guardado automático y modo oscuro.</p>
         <div class="hero-ctas">
@@ -530,7 +719,7 @@
           </div>
           <div class="demo-kanban">
             <div class="demo-col">
-              <div class="demo-col-head"><span class="demo-dot-col" style="background:#7C86AE"></span>Por hacer</div>
+              <div class="demo-col-head"><span class="demo-dot-col" style="background:#616775"></span>Por hacer</div>
               <div class="demo-pill">Redactar propuesta</div>
               <div class="demo-pill">Revisar correos</div>
               <div class="demo-pill add">+ Nueva tarea</div>
@@ -541,7 +730,7 @@
               <div class="demo-pill">Cronómetro activo</div>
             </div>
             <div class="demo-col">
-              <div class="demo-col-head"><span class="demo-dot-col" style="background:#4F6FEF"></span>Completadas</div>
+              <div class="demo-col-head"><span class="demo-dot-col" style="background:#B35A00"></span>Completadas</div>
               <div class="demo-pill done">Enviar informe</div>
               <div class="demo-pill done">Llamada con cliente</div>
             </div>
@@ -563,42 +752,42 @@
     <div class="feat-grid">
       <div class="feat-card reveal">
         <div class="icon-badge">
-          <svg viewBox="0 0 24 24" fill="none" stroke="url(#f1)" stroke-width="1.6"><defs><linearGradient id="f1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4F6FEF"/><stop offset="100%" stop-color="#8B5CF6"/></linearGradient></defs><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="url(#f1)" stroke-width="1.6"><defs><linearGradient id="f1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#B35A00"/><stop offset="100%" stop-color="#8A4A00"/></linearGradient></defs><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
         </div>
         <h3>Tablero Kanban</h3>
         <p>Organiza tus tareas por estado (por hacer, en proceso, en pausa, completadas) y arrástralas entre columnas.</p>
       </div>
       <div class="feat-card reveal">
         <div class="icon-badge">
-          <svg viewBox="0 0 24 24" fill="none" stroke="url(#f2)" stroke-width="1.6"><defs><linearGradient id="f2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4F6FEF"/><stop offset="100%" stop-color="#8B5CF6"/></linearGradient></defs><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="url(#f2)" stroke-width="1.6"><defs><linearGradient id="f2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#B35A00"/><stop offset="100%" stop-color="#8A4A00"/></linearGradient></defs><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
         </div>
         <h3>Calendario</h3>
         <p>Ve tus tareas por día y mes, navega entre fechas y planifica con una vista clara del mes completo.</p>
       </div>
       <div class="feat-card reveal">
         <div class="icon-badge">
-          <svg viewBox="0 0 24 24" fill="none" stroke="url(#f3)" stroke-width="1.6"><defs><linearGradient id="f3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4F6FEF"/><stop offset="100%" stop-color="#8B5CF6"/></linearGradient></defs><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="url(#f3)" stroke-width="1.6"><defs><linearGradient id="f3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#B35A00"/><stop offset="100%" stop-color="#8A4A00"/></linearGradient></defs><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg>
         </div>
         <h3>Cronómetros</h3>
         <p>Mide el tiempo real de cada tarea con cronómetros que corren en segundo plano y acumulan el total.</p>
       </div>
       <div class="feat-card reveal">
         <div class="icon-badge">
-          <svg viewBox="0 0 24 24" fill="none" stroke="url(#f4)" stroke-width="1.6"><defs><linearGradient id="f4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4F6FEF"/><stop offset="100%" stop-color="#8B5CF6"/></linearGradient></defs><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="url(#f4)" stroke-width="1.6"><defs><linearGradient id="f4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#B35A00"/><stop offset="100%" stop-color="#8A4A00"/></linearGradient></defs><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
         </div>
         <h3>Exportar e importar</h3>
         <p>Descarga tus reportes en Excel o CSV e importa bases de datos existentes con detección automática de estados.</p>
       </div>
       <div class="feat-card reveal">
         <div class="icon-badge">
-          <svg viewBox="0 0 24 24" fill="none" stroke="url(#f5)" stroke-width="1.6"><defs><linearGradient id="f5" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4F6FEF"/><stop offset="100%" stop-color="#8B5CF6"/></linearGradient></defs><path d="M12 2 3 7v10l9 5 9-5V7l-9-5Z"/><path d="M12 22V12"/><path d="M3 7l9 5 9-5"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="url(#f5)" stroke-width="1.6"><defs><linearGradient id="f5" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#B35A00"/><stop offset="100%" stop-color="#8A4A00"/></linearGradient></defs><path d="M12 2 3 7v10l9 5 9-5V7l-9-5Z"/><path d="M12 22V12"/><path d="M3 7l9 5 9-5"/></svg>
         </div>
         <h3>Prioridades y categorías</h3>
         <p>Marca prioridad alta, media o baja y clasifica por categoría (trabajo, personal, estudio, hogar y más).</p>
       </div>
       <div class="feat-card reveal">
         <div class="icon-badge">
-          <svg viewBox="0 0 24 24" fill="none" stroke="url(#f6)" stroke-width="1.6"><defs><linearGradient id="f6" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4F6FEF"/><stop offset="100%" stop-color="#8B5CF6"/></linearGradient></defs><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="url(#f6)" stroke-width="1.6"><defs><linearGradient id="f6" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#B35A00"/><stop offset="100%" stop-color="#8A4A00"/></linearGradient></defs><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
         </div>
         <h3>Tema claro y oscuro</h3>
         <p>Tu preferencia se guarda y se comparte con el resto de las herramientas de Vixtory Tech.</p>
@@ -651,7 +840,7 @@
 <section class="section-pad" id="iniciar">
   <div class="wrap">
     <div class="cta-card reveal">
-      <div class="eyebrow" style="color:#9DB2FF; justify-content:center;">EMPIEZA AHORA</div>
+      <div class="eyebrow">EMPIEZA AHORA</div>
       <h2>Tu productividad, visualizada</h2>
       <p>Gratis, sin registro y listo en segundos. Organiza tu día con Vixtory Tasks.</p>
       <a class="btn btn-primary" href="vixtory-tasks.html" style="font-size:15px; padding:15px 34px;">Iniciar Vixtory Tasks →</a>
@@ -668,13 +857,13 @@
         <p>Vixtory Tech — IA, automatización, datos y consultoría. Vixtory Tasks es nuestra herramienta de productividad.</p>
       </div>
       <div class="foot-col">
-        <h5>Producto</h5>
+        <h3>Producto</h3>
         <a href="vixtory-tasks.html">Iniciar Vixtory Tasks</a>
         <a href="#funciones">Funciones</a>
         <a href="#beneficios">Beneficios</a>
       </div>
       <div class="foot-col">
-        <h5>Compañía</h5>
+        <h3>Compañía</h3>
         <a href="https://vixtory.tech">Inicio · vixtory.tech</a>
         <a href="https://vixtory.tech/vixtory-maps.html">Vixtory Maps</a>
         <a href="https://vixtory.tech/vixtory-maps.html">Mapas mentales</a>
