@@ -392,6 +392,9 @@ footer{ padding:64px 0 44px; background:var(--bg); }
 .btn-primary{ border-color:rgba(255,255,255,.24); }
 .btn-primary::before{ background:radial-gradient(125% 95% at 18% -25%, rgba(255,255,255,.40), rgba(255,255,255,0) 60%); }
 
+/* ---------- la fila de botones del héroe va centrada en TODA la sección ---------- */
+.hero-actions{ grid-column:1 / -1; justify-content:center; margin-top:6px; }
+
 </style>
 </head>
 <body>
@@ -428,14 +431,7 @@ footer{ padding:64px 0 44px; background:var(--bg); }
     <div>
       <h1 class="reveal">Convertimos la operación de tu negocio en una <span class="tone-soft">ventaja medible</span></h1>
       <p class="lead reveal">Diseñamos e implementamos inteligencia artificial, automatización de procesos y sistemas de datos para empresas que quieren dejar de perder tiempo en tareas repetitivas y empezar a decidir con información real.</p>
-      <div class="cta-row reveal">
-        <a href="#contacto" class="btn btn-primary">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.07L2 22l5.05-1.32A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2Z" stroke="currentColor" stroke-width="1.5"/></svg>
-          Hablar con Vixtory
-        </a>
-        <a href="#servicios" class="btn btn-secondary">Ver servicios</a>
-      </div>
-    </div>
+</div>
     <div class="diagram" aria-label="Cómo funciona una implementación de Vixtory Tech">
         <div class="diagram-head">
           <span class="diagram-title">Cómo funciona</span>
@@ -463,8 +459,16 @@ footer{ padding:64px 0 44px; background:var(--bg); }
           <span>Implementación típica: 2 a 10 días hábiles</span>
           <span>Operación 24/7</span>
         </div>
+            
+    </div>
+  <div class="cta-row hero-actions reveal">
+        <a href="#contacto" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.07L2 22l5.05-1.32A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2Z" stroke="currentColor" stroke-width="1.5"/></svg>
+          Hablar con Vixtory
+        </a>
+        <a href="#servicios" class="btn btn-secondary">Ver servicios</a>
       </div>
-  </div>
+    </div>
 </section>
 
 <!-- ============ STATS ============ -->
