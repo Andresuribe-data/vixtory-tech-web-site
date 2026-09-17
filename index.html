@@ -371,10 +371,9 @@ footer{ padding:64px 0 44px; background:var(--bg); }
 .hero{ position:relative; overflow:hidden; border-bottom:0; padding:168px 0 92px; isolation:isolate; }
 /* el agente va como fondo del héroe: no afecta el diseño ni depende de un <img> */
 .hero::before{ content:''; position:absolute; left:50%; top:18px; transform:translateX(-50%);
-  width:min(1240px, 106vw); aspect-ratio:1021 / 773; z-index:-2; pointer-events:none; opacity:.92;
+  width:min(1240px, 106vw); aspect-ratio:1280 / 896; z-index:-2; pointer-events:none; opacity:.98;
   background-image:url(assets/agente-heroe.jpg); background-repeat:no-repeat;
-  background-position:center top; background-size:100% auto;
-  filter:brightness(.95) contrast(1.04); }
+  background-position:center top; background-size:100% auto; }
 /* velo suave: solo hunde los bordes del héroe, no tapa el agente */
 .hero::after{ content:''; position:absolute; inset:0; z-index:-1; pointer-events:none;
   background:linear-gradient(180deg, var(--bg) 0%, rgba(11,11,12,0) 18%, rgba(11,11,12,0) 76%, var(--bg) 100%); }
