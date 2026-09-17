@@ -42,6 +42,7 @@
    contraste AA (texto claro sobre oscuro / texto oscuro sobre ámbar).
    ============================================================ */
 :root{
+  --measure:32em;
   --bg:#0B0B0C; --bg-alt:#0F0F11; --surface:#131316; --surface-2:#17171B;
   --ink:#F2EFE9; --ink-soft:#C3C7D0; --ink-faint:#9AA0AB;
   --line:rgba(255,255,255,.12); --line-strong:rgba(255,255,255,.26);
@@ -86,7 +87,7 @@ h1,h2,h3,h4{ font-family:'Outfit',sans-serif; letter-spacing:-.032em; line-heigh
 h1{ font-size:clamp(2.5rem,6.2vw,5.1rem); font-weight:600; }
 h2{ font-size:clamp(1.75rem,3.3vw,2.85rem); font-weight:600; }
 h3{ font-size:clamp(1.25rem,1.8vw,1.6rem); font-weight:600; letter-spacing:-.02em; }
-p{ max-width:72ch; color:var(--ink-soft); }
+p{ max-width:var(--measure); color:var(--ink-soft); }
 .tone-soft{ color:var(--ink-soft); }
 .mono{ font-family:'Azeret Mono',ui-monospace,monospace; font-variant-numeric:tabular-nums; font-feature-settings:"tnum"; }
 .lead{ font-size:1.06rem; color:var(--ink-soft); max-width:56ch; }
@@ -96,7 +97,7 @@ p{ max-width:72ch; color:var(--ink-soft); }
 section{ position:relative; }
 .section-pad{ padding:120px 0 96px; }
 .section-pad + .section-pad{ padding-top:88px; }
-.section-head{ max-width:64ch; margin:0 0 56px; }
+.section-head{ max-width:var(--measure); margin:0 0 56px; }
 .section-head h2{ margin-bottom:18px; }
 .section-head p{ color:var(--ink-soft); }
 
@@ -184,11 +185,13 @@ nav{ display:flex; align-items:center; justify-content:space-between; gap:24px; 
 
 /* ---------- filas editoriales (disciplinas y aplicaciones) ---------- */
 .rows{ border-top:1px solid var(--line); }
-.row{ display:grid; grid-template-columns:1.05fr 1.4fr auto; gap:32px; align-items:start; padding:34px 0; border-bottom:1px solid var(--line); transition:background .18s var(--ease); }
-.row:hover{ background:var(--surface); }
-.row-title{ font-family:'Outfit',sans-serif; font-size:clamp(1.2rem,1.7vw,1.5rem); font-weight:600; letter-spacing:-.02em; }
-.row-copy{ font-size:15.5px; color:var(--ink-soft); max-width:62ch; }
-.row-tag{ font-size:12.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); white-space:nowrap; padding-top:6px; }
+.row{ display:grid; grid-template-columns:280px minmax(0,1fr) max-content; gap:22px 34px;
+  align-items:baseline; padding:38px 0; border-bottom:1px solid var(--line); }
+.row-title{ font-family:'Outfit',sans-serif; font-size:clamp(1.15rem,1.5vw,1.42rem); font-weight:600;
+  letter-spacing:-.02em; line-height:1.25; }
+.row-copy{ font-size:15.5px; line-height:1.65; color:var(--ink-soft); max-width:var(--measure); }
+.row-tag{ font-size:12.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint);
+  white-space:nowrap; text-align:right; }
 .row-icon{ width:20px; height:20px; stroke:var(--accent-text); stroke-width:1.5; fill:none; margin-bottom:12px; }
 .row-link{ display:inline-flex; align-items:center; gap:7px; font-size:13.5px; font-weight:600; color:var(--accent-text); white-space:nowrap; padding-top:4px; }
 .row-link:hover{ text-decoration:underline; }
@@ -271,7 +274,8 @@ footer{ padding:64px 0 44px; background:var(--bg); }
   .stats-grid{ grid-template-columns:repeat(2,1fr); }
   .stat{ padding:26px 20px; }
   .stat:nth-child(odd){ border-left:0; padding-left:0; }
-  .row{ grid-template-columns:1fr; gap:12px; padding:28px 0; }
+  .row{ grid-template-columns:1fr; gap:10px; padding:30px 0; }
+  .row-tag{ text-align:left; }
   .process-grid{ grid-template-columns:1fr; }
   .p-step{ border-left:0; border-top:1px solid var(--line); padding:26px 0; }
   .p-step:first-child{ border-top:0; }
@@ -311,6 +315,9 @@ footer{ padding:64px 0 44px; background:var(--bg); }
   .app-col{ padding:40px 8px; }
   .app-col + .app-col::before{ left:14%; right:14%; top:0; bottom:auto; width:auto; height:1px; }
 }
+
+/* ---------- medida de lectura: 65–75 caracteres por línea (el `ch` resultaba engañoso) ---------- */
+.hero p, .section-head p, .row-copy, .cta-dark p, .p-step p, .value p, .footer-brand p{ max-width:32em; }
 
 </style>
 </head>
@@ -544,7 +551,7 @@ footer{ padding:64px 0 44px; background:var(--bg); }
         <span class="row-tag"></span>
       </div>
     </div>
-    <p style="max-width:64ch; margin:40px 0 0; padding-top:28px; border-top:1px solid var(--line); color:var(--ink-soft); font-size:16px;" class="reveal">Las empresas que adoptan inteligencia artificial y automatización hoy logran responder más rápido a sus clientes, reducir errores y liberar horas de trabajo manual. En Vixtory Tech te acompañamos de principio a fin: diagnosticamos tus procesos, implementamos con tus sistemas actuales —incluido tu agente de WhatsApp— y medimos los resultados con datos, no con suposiciones. Si tu negocio opera en Colombia y quieres dejar de perder tiempo en tareas repetitivas, podemos empezar con un piloto pequeño y de bajo riesgo que demuestre el retorno antes de escalar.</p>
+    <p style="max-width:var(--measure); margin:40px 0 0; padding-top:28px; border-top:1px solid var(--line); color:var(--ink-soft); font-size:16px;" class="reveal">Las empresas que adoptan inteligencia artificial y automatización hoy logran responder más rápido a sus clientes, reducir errores y liberar horas de trabajo manual. En Vixtory Tech te acompañamos de principio a fin: diagnosticamos tus procesos, implementamos con tus sistemas actuales —incluido tu agente de WhatsApp— y medimos los resultados con datos, no con suposiciones. Si tu negocio opera en Colombia y quieres dejar de perder tiempo en tareas repetitivas, podemos empezar con un piloto pequeño y de bajo riesgo que demuestre el retorno antes de escalar.</p>
     <div style="margin-top:24px;" class="reveal">
       <a href="#contacto" class="btn btn-primary">Hablemos de tu proyecto</a>
     </div>
