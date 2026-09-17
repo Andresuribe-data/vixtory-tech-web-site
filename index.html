@@ -348,14 +348,6 @@ footer{ padding:64px 0 44px; background:var(--bg); }
 .btn:hover, .nav-cta:hover, .wa-float:hover{ transform:translateY(-2px); border-color:rgba(255,255,255,.36); }
 .btn:active, .nav-cta:active, .wa-float:active{ transform:translateY(0); }
 
-/* variante de marca: el mismo vidrio, teñido de ámbar */
-.nav-cta, .btn-primary, .wa-float{
-  background:linear-gradient(180deg, rgba(255,180,108,.46), rgba(255,138,30,.34) 60%, rgba(150,74,12,.58)),
-    rgba(12,10,9,.55);
-  border-color:rgba(255,178,102,.46);
-  color:#fff;
-}
-.btn-primary:hover, .nav-cta:hover{ border-color:rgba(255,196,138,.62); }
 .wa-float .wa-ic path{ stroke:#fff; }
 
 /* tema claro: vidrio claro sobre papel, con la marca en ámbar fuerte y texto oscuro */
@@ -374,6 +366,24 @@ footer{ padding:64px 0 44px; background:var(--bg); }
 .value, .p-step{ text-align:center; }
 .value p, .p-step p{ margin:0 auto; }
 .value h3, .p-step h3{ text-align:center; }
+
+/* ---------- banda de contacto centrada ---------- */
+.cta-dark{ text-align:center; }
+.cta-inner{ max-width:56em; margin:0 auto; }
+.cta-dark h2{ max-width:22em; margin:0 auto 20px; }
+.cta-dark p{ max-width:34em; margin:0 auto 34px; }
+.cta-actions{ justify-content:center; }
+.wa-note{ text-align:center; }
+.cta-actions{ flex-wrap:wrap; }
+.cta-actions .wa-note, .cta-actions > .wa-note{ flex-basis:100%; margin-top:6px; }
+.section-head h2, .cta-dark h2, .hero h1{ text-wrap:balance; }
+
+/* ---------- todos los botones: óvalo y un único vidrio oscuro ---------- */
+.btn, .nav-cta, .wa-float, .theme-toggle, .modal-close{ border-radius:var(--radius-pill); }
+
+/* jerarquía sin cambiar el color: el principal lleva el filo un punto más marcado */
+.btn-primary{ border-color:rgba(255,255,255,.34); }
+.btn-primary::before{ background:radial-gradient(125% 95% at 18% -25%, rgba(255,255,255,.52), rgba(255,255,255,0) 62%); }
 
 </style>
 </head>
